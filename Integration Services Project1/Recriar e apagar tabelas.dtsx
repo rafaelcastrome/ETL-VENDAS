@@ -1,0 +1,149 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="4/1/2023 6:47:33 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="AZ-PROVA05"
+  DTS:CreatorName="SFIEC\p_acmelo"
+  DTS:DTSID="{07EDFFD1-07EF-47BF-8A5E-AB48726000DF}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.180"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Recriar e apagar tabelas"
+  DTS:PackageType="5"
+  DTS:VersionBuild="15"
+  DTS:VersionGUID="{20AC1485-A17B-464E-9629-290D5C286571}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[LocalHost.COMERCIO_STAGE]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{D7983E78-2974-479A-8657-5F8B0DA75A9D}"
+      DTS:ObjectName="LocalHost.COMERCIO_STAGE">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=.;Initial Catalog=COMERCIO_STAGE;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[localhost.COMERCIO_STAGE.sa]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{46C47507-574F-4496-B3EA-1317D7A0959C}"
+      DTS:ObjectName="localhost.COMERCIO_STAGE.sa">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=localhost;User ID=sa;Initial Catalog=COMERCIO_STAGE;Provider=SQLNCLI11.1;Application Name=SSIS-Recriar ou apagar dimensoes-{46C47507-574F-4496-B3EA-1317D7A0959C}localhost.COMERCIO_STAGE.sa;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Apagar registros STAGES"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{380c817c-fa2d-4874-b29a-67cd791afe25}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Apagar registros STAGES"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{D7983E78-2974-479A-8657-5F8B0DA75A9D}"
+          SQLTask:SqlStatementSource="TRUNCATE TABLE  [COMERCIO_STAGE].[dbo].[ST_CATEGORIA];&#xA;&#xA;TRUNCATE TABLE  [COMERCIO_STAGE].[dbo].[ST_CLIENTE];&#xA;&#xA;TRUNCATE TABLE  [COMERCIO_STAGE].[dbo].[ST_FORMA];&#xA;&#xA;TRUNCATE TABLE  [COMERCIO_STAGE].[dbo].[ST_FORNECEDOR];&#xA;&#xA;TRUNCATE TABLE  [COMERCIO_STAGE].[dbo].[ST_NOTA];&#xA;&#xA;TRUNCATE TABLE  [COMERCIO_STAGE].[dbo].[ST_PRODUTO];&#xA;&#xA;TRUNCATE TABLE  [COMERCIO_STAGE].[dbo].[ST_VENDEDOR];&#xA;&#xA;TRUNCATE TABLE  [COMERCIO_STAGE].[dbo].[ST_FATO];" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Cria tabelas ST"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{ce07f69b-3439-4511-b7a2-d7a42e56a9a5}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Cria tabelas ST"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{D7983E78-2974-479A-8657-5F8B0DA75A9D}"
+          SQLTask:SqlStatementSource="/**Cria tabelas caso haja drop do banco**/&#xA;USE [COMERCIO_STAGE];&#xA; IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[COMERCIO_STAGE].[dbo].[ST_CATEGORIA]') AND type in (N'U'))&#xA;  CREATE TABLE [ST_CATEGORIA] (&#xA;    [IDCATEGORIA] int,&#xA;    [NOME] varchar(30)&#xA;);&#xA;&#xA; IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[COMERCIO_STAGE].[dbo].[ST_VENDEDOR]') AND type in (N'U'))&#xA;CREATE TABLE [ST_VENDEDOR] (&#xA;    [IDVENDEDOR] int,&#xA;    [NOME] varchar(30),&#xA;    [SEXO] varchar(1),&#xA;    [EMAIL] varchar(30)&#xA;);&#xA;&#xA;IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[COMERCIO_STAGE].[dbo].[ST_CLIENTE]') AND type in (N'U'))&#xA;CREATE TABLE [ST_CLIENTE] (&#xA;    [NOME] varchar(50),&#xA;    [IDCLIENTE] int,&#xA;    [SOBRENOME] varchar(30),&#xA;    [EMAIL] varchar(60),&#xA;    [SEXO] varchar(1),&#xA;    [NASCIMENTO] date&#xA;);&#xA;&#xA;IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[COMERCIO_STAGE].[dbo].[ST_FORNECEDOR]') AND type in (N'U'))&#xA;CREATE TABLE [ST_FORNECEDOR] (&#xA;    [IDFORNECEDOR] int,&#xA;    [NOME] varchar(50)&#xA;);&#xA;&#xA;&#xA;IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[COMERCIO_STAGE].[dbo].[ST_FORMA]') AND type in (N'U'))&#xA;CREATE TABLE [ST_FORMA] (&#xA;    [IDFORMA] int,&#xA;    [FORMA] varchar(40)&#xA;);&#xA;&#xA;IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[COMERCIO_STAGE].[dbo].[ST_PRODUTO]') AND type in (N'U'))&#xA;CREATE TABLE [ST_PRODUTO] (&#xA;    [IDPRODUTO] int,&#xA;    [PRODUTO] varchar(100),&#xA;    [ID_CATEGORIA] int&#xA;);&#xA;&#xA;IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[COMERCIO_STAGE].[dbo].[ST_NOTA]') AND type in (N'U'))&#xA;CREATE TABLE [ST_NOTA] (&#xA;    [IDITEMNOTA] int,&#xA;    [ID_NOTA_FISCAL] int&#xA;)&#xA;&#xA;IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[COMERCIO_STAGE].[dbo].[ST_FATO]') AND type in (N'U'))&#xA;CREATE TABLE [ST_FATO] (&#xA;    [IDITEMNOTA] int,&#xA;    [ID_PRODUTO] int,&#xA;    [ID_NOTA_FISCAL] int,&#xA;    [QUANTIDADE] int,&#xA;    [VALOR_ITEM] numeric(10,2),&#xA;    [DATA] date,&#xA;    [ID_FORMA] int,&#xA;    [ID_CLIENTE] int,&#xA;    [ID_VENDEDOR] int,&#xA;    [ID_FORNECEDOR] int,&#xA;    [CUSTO_MEDIO] numeric(10,2)&#xA;);&#xA;&#xA;/*CRIA TABELAS DO COMERCIO_DW*/&#xA;USE COMERCIO_DW;&#xA;IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'dim_tempo')&#xA;BEGIN&#xA;   CREATE TABLE DIM_TEMPO (&#xA;    sk_tempo INT IDENTITY(1,1) PRIMARY KEY,&#xA;    data DATE,&#xA;    dia INT,&#xA;    mes INT,&#xA;    ano INT,&#xA;    semana INT,&#xA;    dia_extenso VARCHAR(20)&#xA;)&#xA;DECLARE @data_inicio DATE = '2013-01-01'&#xA;DECLARE @data_fim DATE = '2017-01-01'&#xA;&#xA;WHILE (@data_inicio &lt;= @data_fim)&#xA;BEGIN&#xA;    INSERT INTO dim_tempo (data, dia, mes, ano, semana, dia_extenso)&#xA;    VALUES (&#xA;        @data_inicio,&#xA;        DAY(@data_inicio),&#xA;        MONTH(@data_inicio),&#xA;        YEAR(@data_inicio),&#xA;        DATEPART(wk, @data_inicio),&#xA;        DATENAME(dw, @data_inicio)&#xA;    )&#xA;&#xA;    SET @data_inicio = DATEADD(day, 1, @data_inicio)&#xA;END&#xA;END&#xA;&#xA;IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'DIM_NOTA')&#xA;BEGIN&#xA;    CREATE TABLE dbo.DIM_NOTA (&#xA;        sk_nota BIGINT IDENTITY NOT NULL,&#xA;        id_item_nota INT NOT NULL,&#xA;        id_nota_fiscal INT NOT NULL,&#xA;        CONSTRAINT DIM_NOTA_pk PRIMARY KEY (sk_nota)&#xA;    )&#xA;END&#xA;&#xA;IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'DIM_VENDEDOR')&#xA;BEGIN&#xA;    CREATE TABLE dbo.DIM_VENDEDOR (&#xA;        sk_vendedor BIGINT IDENTITY NOT NULL,&#xA;        id_vendedor INT NOT NULL,&#xA;        ds_nome VARCHAR(30) NOT NULL,&#xA;        ds_sexo CHAR(1) NOT NULL,&#xA;        ds_email VARCHAR(30) NOT NULL,&#xA;        ds_status VARCHAR(3) NOT NULL,&#xA;        CONSTRAINT DIM_VENDEDOR_pk PRIMARY KEY (sk_vendedor)&#xA;    )&#xA;END&#xA;&#xA;IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'DIM_FORMA')&#xA;BEGIN&#xA;    CREATE TABLE dbo.DIM_FORMA (&#xA;        sk_forma BIGINT IDENTITY NOT NULL,&#xA;        id_forma INT NOT NULL,&#xA;        ds_forma VARCHAR(50) NOT NULL,&#xA;        CONSTRAINT DIM_FORMA_pk PRIMARY KEY (sk_forma)&#xA;    )&#xA;END&#xA;&#xA;IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'DIM_CATEGORIA')&#xA;BEGIN&#xA;    CREATE TABLE dbo.DIM_CATEGORIA (&#xA;        id_categoria INT NOT NULL,&#xA;        ds_nome VARCHAR(30) NOT NULL,&#xA;        CONSTRAINT DIM_CATEGORIA_pk PRIMARY KEY (id_categoria)&#xA;    )&#xA;END&#xA;&#xA;IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'DIM_PRODUTO')&#xA;BEGIN&#xA;    CREATE TABLE dbo.DIM_PRODUTO (&#xA;        sk_produto BIGINT IDENTITY NOT NULL,&#xA;        id_produto INT NOT NULL,&#xA;        ds_produto VARCHAR(100) NOT NULL,&#xA;        id_categoria INT NOT NULL,&#xA;        ds_status VARCHAR(3) NOT NULL,&#xA;        CONSTRAINT DIM_PRODUTO_pk PRIMARY KEY (sk_produto)&#xA;    )&#xA;END&#xA;&#xA;IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'DIM_CLIENTE')&#xA;BEGIN&#xA;    CREATE TABLE dbo.DIM_CLIENTE (&#xA;        sk_cliente BIGINT IDENTITY NOT NULL,&#xA;        id_cliente INT NOT NULL,&#xA;        ds_nome VARCHAR(30) NOT NULL,&#xA;        ds_sobrenome VARCHAR(30) NOT NULL,&#xA;        ds_email VARCHAR(60) NOT NULL,&#xA;        ds_sexo CHAR(1) NOT NULL,&#xA;        dt_nascimento DATETIME NOT NULL,&#xA;        ds_status VARCHAR(3) NOT NULL,&#xA;        CONSTRAINT DIM_CLIENTE_pk PRIMARY KEY (sk_cliente)&#xA;    )&#xA;END&#xA;&#xA;IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'DIM_FORNECEDOR')&#xA;BEGIN&#xA;    CREATE TABLE dbo.DIM_FORNECEDOR (&#xA;        sk_fornecedor BIGINT IDENTITY NOT NULL,&#xA;        id_fornecedor INT NOT NULL,&#xA;        ds_nome VARCHAR(50) NOT NULL,&#xA;        ds_status VARCHAR(3) NOT NULL,&#xA;        CONSTRAINT DIM_FORNECEDOR_pk PRIMARY KEY (sk_fornecedor)&#xA;    )&#xA;END&#xA;&#xA;IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'fato_venda')&#xA;BEGIN&#xA;    CREATE TABLE dbo.FATO_VENDA (&#xA;id_fato_venda BIGINT IDENTITY NOT NULL PRIMARY KEY,&#xA;sk_cliente BIGINT NOT NULL,&#xA;sk_fornecedor BIGINT NOT NULL,&#xA;sk_vendedor BIGINT NOT NULL,&#xA;sk_produto BIGINT NOT NULL,&#xA;sk_forma BIGINT NOT NULL,&#xA;sk_nota BIGINT NOT NULL,&#xA;sk_tempo INT NOT NULL,&#xA;nm_quantidade BIGINT NOT NULL,&#xA;nm_custo_medio NUMERIC(10,2) NOT NULL,&#xA;nm_valor_item NUMERIC(12,2) NOT NULL,&#xA;FOREIGN KEY (sk_cliente) REFERENCES dbo.DIM_CLIENTE (sk_cliente),&#xA;FOREIGN KEY (sk_fornecedor) REFERENCES dbo.DIM_FORNECEDOR (sk_fornecedor),&#xA;FOREIGN KEY (sk_vendedor) REFERENCES dbo.DIM_VENDEDOR (sk_vendedor),&#xA;FOREIGN KEY (sk_produto) REFERENCES dbo.DIM_PRODUTO (sk_produto),&#xA;FOREIGN KEY (sk_forma) REFERENCES dbo.DIM_FORMA (sk_forma),&#xA;FOREIGN KEY (sk_nota) REFERENCES dbo.DIM_NOTA (sk_nota),&#xA;FOREIGN KEY (sk_tempo) REFERENCES dbo.dim_tempo (sk_tempo)&#xA;)&#xA;END&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{A850DFE1-327A-4FB7-A01A-A06B040FCE9B}"
+      DTS:From="Package\Cria tabelas ST"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Apagar registros STAGES" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--Esta seção CDATA contém as informações de layout do pacote. A seção inclui informações como coordenadas (x,y), largura e altura.-->
+<!--Se você editar manualmente esta seção e cometer algum erro, poderá excluí-la. -->
+<!--O pacote ainda poderá ser carregado normalmente, mas as informações de layout anteriores serão perdidas e o designer reorganizará automaticamente os elementos na superfície de design.-->
+<Objects
+  Version="8">
+  <!--Cada nó abaixo conterá propriedades que não afetam o comportamento em tempo de execução.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="207,42"
+          Id="Package\Apagar registros STAGES"
+          TopLeft="204.5,195.5" />
+        <NodeLayout
+          Size="155,42"
+          Id="Package\Cria tabelas ST"
+          TopLeft="210.5,39.5" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="288,81.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="20,114"
+              Start="0,0"
+              End="20,106.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,53" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,53"
+                    Point2="0,57"
+                    Point3="4,57" />
+                  <mssgle:LineSegment
+                    End="16,57" />
+                  <mssgle:CubicBezierSegment
+                    Point1="16,57"
+                    Point2="20,57"
+                    Point3="20,61" />
+                  <mssgle:LineSegment
+                    End="20,106.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
