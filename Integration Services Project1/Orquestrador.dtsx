@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="Orquestrador"
   DTS:PackageType="5"
-  DTS:VersionBuild="5"
-  DTS:VersionGUID="{D44A9B4E-8304-48B9-9092-01C60DBE1F75}">
+  DTS:VersionBuild="6"
+  DTS:VersionGUID="{E32C1A35-060A-45D2-B547-3FFDFAEDE596}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:Variables />
@@ -275,6 +275,10 @@
       <GraphLayout
         Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
+          Size="144,42"
+          Id="Package\Carregar DW"
+          TopLeft="553,334" />
+        <NodeLayout
           Size="160,42"
           Id="Package\Carregar St_fato"
           TopLeft="549,219" />
@@ -498,10 +502,6 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="144,42"
-          Id="Package\Carregar DW"
-          TopLeft="553,334" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Restrição]"
           TopLeft="627,261">

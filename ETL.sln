@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.33423.256
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{C9674DCB-5085-4A16-B785-4C70DD1589BD}") = "ETL Prova ADRIANO", "Integration Services Project1\ETL Prova ADRIANO.dtproj", "{B3B3AA34-27BF-49F9-A10A-DA69E61E8D28}"
+Project("{159641D6-6404-4A2A-AE62-294DE0FE8301}") = "ETL Vendas", "Integration Services Project1\ETL Vendas.dtproj", "{B3B3AA34-27BF-49F9-A10A-DA69E61E8D28}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

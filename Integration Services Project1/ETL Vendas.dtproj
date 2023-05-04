@@ -15,7 +15,7 @@
       <SSIS:Project SSIS:ProtectionLevel="EncryptSensitiveWithUserKey" xmlns:SSIS="www.microsoft.com/SqlServer/SSIS">
         <SSIS:Properties>
           <SSIS:Property SSIS:Name="ID">{548e4fa5-0567-4cc9-a42a-8e5db16b247e}</SSIS:Property>
-          <SSIS:Property SSIS:Name="Name">ETL Prova ADRIANO</SSIS:Property>
+          <SSIS:Property SSIS:Name="Name">ETL Vendas</SSIS:Property>
           <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
           <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
           <SSIS:Property SSIS:Name="VersionBuild">0</SSIS:Property>
@@ -26,7 +26,7 @@
           <SSIS:Property SSIS:Name="CreatorComputerName">AZ-PROVA05</SSIS:Property>
           <SSIS:Property SSIS:Name="Description">
           </SSIS:Property>
-          <SSIS:Property SSIS:Name="PasswordVerifier" SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA/CXc4cNKIkGPbtmEV3F7BQAAAAACAAAAAAADZgAAwAAAABAAAABvNzGGPTayh5TJ7da3bp/sAAAAAASAAACgAAAAEAAAAObOcRk59ix8Nt1Ha7ScncGIAAAASR58c8UbKXrSFb//Des4MASlFaYH5MOWwnGsCxO6s9xWCxmKTrf9EQ6sDBGWpJ1Cg2fmwaJwG3r3lEbFw5cYyDyFKvv8TioTMYkM2ca78WOntnMCGSRDrumZgmCQ44F05rbJYg2y3YOnH5tb2tpHe+XQADqjNkK63/Wj2nbMvbI2HEdrX+06exQAAADTofHmKg0RHDaiosarZHR71QyI8w==</SSIS:Property>
+          <SSIS:Property SSIS:Name="PasswordVerifier" SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAACB9p0G/U2UCyYCfkiZC4XwAAAAACAAAAAAADZgAAwAAAABAAAABEwwlqBLW2crwIRM7CEnchAAAAAASAAACgAAAAEAAAAC+V6BMT4wrUXae9yLZfjYmIAAAAq2+uhK4t13mHWnOgNDFqruaKZZHQiuKm97SvQJsUk0l+m7AUhIF3z4pFrTYgZnFfxHX75h/h9dx/BrRdclL+PT2An4DjByFRvcGARbQtjJMfHISGbyXFCUXz717G1GyGqnAH3GQEGflqtFWFucmyZto+N/NVSqJ5yI1Fv6qiCcvh2jCl+Ol2zhQAAADS2NOD46AzkZnW8n5dhFBQpyeNlg==</SSIS:Property>
           <SSIS:Property SSIS:Name="FormatVersion">1</SSIS:Property>
         </SSIS:Properties>
         <SSIS:Packages>
