@@ -45,10 +45,35 @@ O campo `fala` do `projeto.json` é o que a voz pronuncia. Escreva-o **como se f
 
 Na tela, sempre use a grafia correta (`@caderno_amarelo`, `50%+1`).
 
+## Fatos e fontes (vale para todo vídeo, principalmente curiosidades)
+
+O perfil vive de credibilidade: um número inventado, quando alguém desmente nos comentários, contamina todos os vídeos. Regras:
+
+1. **Liste os fatos antes de escrever.** Todo número, recorde, data, comparação ("o maior do mundo") ou afirmação científica do roteiro é um fato a verificar.
+2. **Cada fato precisa de fonte concreta**, de preferência primária:
+   - órgãos oficiais (IBGE, OMS, Ministério da Saúde, Banco Central, NASA);
+   - pesquisas publicadas e relatórios conhecidos (relatórios anuais de institutos e consultorias de pesquisa);
+   - enciclopédias e veículos jornalísticos sérios.
+   Use WebSearch/WebFetch quando disponíveis e abra a página para confirmar o número; não confie só no resumo da busca.
+3. **Contas são fatos derivados.** Se a conta parte de um dado com fonte (ex.: 5 h/dia de celular), mostre a conta; o resultado herda a fonte. Arredonde para baixo ou use "mais de", "quase".
+4. **Sem fonte:**
+   - o fato sai do roteiro, ou
+   - vira **suposição declarada** na fala e na tela ("imagine 20 minutos por dia…", "se você…"), nunca "estudos mostram".
+5. **Mitos populares** ("usamos só 10% do cérebro", "a Muralha da China é vista do espaço") só entram para serem **desmentidos**, com fonte.
+6. **Registre** em `projeto.json`:
+   ```json
+   "fontes": [
+     { "fato": "<o fato exatamente como aparece no vídeo>", "fonte": "<instituição, publicação, ano>", "url": "<link da página consultada>" }
+   ]
+   ```
+   O motor ignora esse campo, que serve para conferência e para a entrega.
+7. **Sem acesso à internet** para verificar: diga isso ao usuário antes de renderizar e peça a fonte, ou a autorização para usar os números como suposição. Nunca preencha a lacuna com "conhecimento geral" apresentado como fato.
+8. **Na entrega:** passe as fontes em formato curto para a legenda ou para um comentário fixado ("📚 Fontes: IBGE (2022), OMS (2023)").
+
 ## Temas sensíveis (política, saúde, finanças)
 
 - **Política:** seja neutro. Use candidatos/partidos fictícios ("Candidato A"), não recomende voto em ninguém e centre o vídeo na regra ou na matemática. Isso protege o perfil de denúncias e alcança todos os lados.
-- **Números reais** (pesquisas, taxas, leis): só use se o usuário fornecer a fonte ou se for regra estável e conhecida. Senão, use exemplos hipotéticos e diga "imagine que...".
+- **Números reais** (pesquisas, taxas, leis): seguem "Fatos e fontes" acima. Regras estáveis e conhecidas (ex.: "50% + 1 dos votos válidos" no 1º turno) também levam a fonte oficial (Constituição, TSE).
 
 ## Legenda para postar (entregue junto com o vídeo)
 

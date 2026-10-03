@@ -18,8 +18,12 @@ Como funciona:
 ### 1. Entender o pedido e escrever o roteiro
 - Se o usuário trouxe roteiro/storyboard fechado, **use exatamente o dele**. Não reescreva falas.
 - Se trouxe só o tema ou contexto, escreva o roteiro seguindo `references/roteiro.md`: gancho, base, exemplo com números, virada, resumo, história curta, moral e CTA, com 6–9 cenas e 45–90 s. **Se o usuário pedir uma duração, ela manda**: use o orçamento de caracteres do `roteiro.md` para caber.
+- **Fatos com fonte, sempre (inegociável):** curiosidade só funciona se for verdade, e um dado inventado destrói a credibilidade do perfil. Antes de escrever o roteiro, levante cada fato do vídeo (estatística, recorde, data, fato científico, "estudos mostram") e encontre uma **fonte concreta** para ele: órgão oficial, pesquisa publicada, relatório conhecido ou veículo jornalístico sério. Use WebSearch/WebFetch se estiverem disponíveis. Registre tudo em `projeto.json` → `fontes`. As regras completas estão em "Fatos e fontes" no `references/roteiro.md`. Resumo:
+  - Sem fonte encontrada → o fato **não entra** no vídeo, ou vira suposição explícita na fala ("se você passar vinte minutos por dia…").
+  - Nunca escreva "estudos apontam" ou "segundo pesquisas" sem a fonte nomeada em `fontes`.
+  - Sem acesso à internet para verificar, **avise o usuário** e peça a fonte ou a autorização para tratar os números como suposição.
 - **Redes sociais:** por padrão use o perfil **Caderno Amarelo**: `instagram: caderno_amarelo` e `tiktok: caderno_amarelo` (fala: "Me segue no Instagrã e no Tic Tóc: arroba caderno ânderláin amarelo"). Se o usuário disser que o vídeo é para outro perfil, pergunte os @ e troque em `projeto.json`.
-- **Aprovação:** a renderização leva vários minutos (~1,3 quadro/s, ou seja, ~25 s de máquina por segundo de vídeo). Antes de gerar, mostre o roteiro em tabela (cena | fala | o que aparece na tela) e peça um OK, a não ser que o usuário tenha dito para fazer direto ou tenha fornecido o roteiro pronto.
+- **Aprovação:** a renderização leva vários minutos (~1,3 quadro/s, ou seja, ~25 s de máquina por segundo de vídeo). Antes de gerar, mostre o roteiro em tabela (cena | fala | o que aparece na tela), com a lista de fontes, e peça um OK, a não ser que o usuário tenha dito para fazer direto ou tenha fornecido o roteiro pronto.
 
 ### 2. Preparar o ambiente e o projeto
 ```bash
@@ -65,6 +69,7 @@ Extraia 2–3 quadros (`ffmpeg -ss <t> -i <nome>.mp4 -frames:v 1 q.png`) e olhe.
 - Envie o `.mp4` ao usuário (ferramenta de envio de arquivo, se houver) e informe o caminho.
 - Diga qual voz foi usada e peça para ele conferir a pronúncia dos @, porque não dá para ouvir aqui.
 - Entregue a **legenda de postagem** (modelo e dicas em `references/roteiro.md`) com 2 variações e a dica de **música de fundo**.
+- Entregue as **fontes** em formato curto, prontas para a legenda ou para um comentário fixado ("📚 Fontes: …"). Isso protege o perfil quando alguém questionar nos comentários.
 - Se estiver num repositório git e o usuário não tiver dito o contrário, faça o commit da pasta do vídeo (o `.gitignore` do projeto já exclui `frames/` e `preview/`).
 
 ## Ajustes depois de pronto
