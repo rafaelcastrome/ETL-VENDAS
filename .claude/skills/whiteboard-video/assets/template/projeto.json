@@ -1,0 +1,11 @@
+{
+  "titulo": "Título do vídeo",
+  "marca": { "instagram": "rafaelcastrome", "tiktok": "rafaelcastro_me" },
+  "marcaDagua": true,
+  "voz": { "edge": "pt-BR-AntonioNeural", "edgeRate": "+10%", "kokoro": "pm_alex", "kokoroSpeed": 1.1 },
+  "pausaPadrao": 0.6,
+  "cenas": [
+    { "fala": "Texto narrado da cena 1.", "pausa": 0.6 },
+    { "fala": "Texto narrado da cena 2.", "pausa": 2.5 }
+  ]
+}
