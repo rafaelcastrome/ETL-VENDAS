@@ -1,9 +1,12 @@
-"""Gera a narração de cada cena com edge-tts, mede as durações com ffprobe,
+"""Gera a narração de cada cena com edge-tts (ou um motor offline em pt-BR), mede as durações com ffprobe,
 concatena tudo em narration.mp3 e salva os tempos das cenas em timeline.json."""
 import asyncio
 import json
 import os
+import re
 import subprocess
+
+import soundfile as sf
 
 import edge_tts
 import edge_tts.communicate as communicate
@@ -43,9 +46,37 @@ async def gerar_edge(texto, mp3):
     await edge_tts.Communicate(texto, VOICE, rate=RATE).save(mp3)
 
 
+# Reserva offline 1: Kokoro (modelo neural, voz masculina nativa pt-BR "pm_alex").
+# Os arquivos do modelo vêm das releases do GitHub do kokoro-onnx (~350 MB).
+KOKORO_DIR = os.path.join(HERE, "models")
+KOKORO_URL = "https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/"
+KOKORO_FILES = ["kokoro-v1.0.onnx", "voices-v1.0.bin"]
+_kokoro = None
+
+
+def gerar_kokoro(texto, mp3):
+    global _kokoro
+    if _kokoro is None:
+        from kokoro_onnx import Kokoro
+        os.makedirs(KOKORO_DIR, exist_ok=True)
+        for nome in KOKORO_FILES:
+            destino = os.path.join(KOKORO_DIR, nome)
+            if not os.path.exists(destino):
+                subprocess.check_call(["curl", "-sS", "-L", "--fail", "-o", destino, KOKORO_URL + nome])
+        _kokoro = Kokoro(*(os.path.join(KOKORO_DIR, n) for n in KOKORO_FILES))
+    fonemas = _kokoro.tokenizer.phonemize(texto, "pt-br")
+    # O eSpeak insere uma vogal de apoio entre "r" e consoante ("tur-ə-no", "ur-ə-na");
+    # no português brasileiro falado ela não existe.
+    fonemas = re.sub(r"ɾə(?=[^\sˈˌaeiouɐɛɔæʊɪ])", "ɾ", fonemas)
+    audio, sr = _kokoro.create(fonemas, voice="pm_alex", speed=1.1, lang="pt-br", is_phonemes=True)
+    wav = mp3[:-4] + "_kokoro.wav"
+    sf.write(wav, audio, sr)
+    subprocess.check_call(["ffmpeg", "-y", "-v", "error", "-i", wav, "-b:a", "192k", mp3])
+    os.remove(wav)
+
+
 def gerar_espeak(texto, mp3):
-    """Reserva offline (eSpeak-NG + MBROLA br3, pt-BR) caso o serviço do
-    edge-tts esteja inacessível na rede."""
+    """Reserva offline 2 (eSpeak-NG + MBROLA br3): voz sintética, bem robótica."""
     wav = mp3[:-4] + "_espeak.wav"
     subprocess.check_call(["espeak-ng", "-v", "mb-br3", "-s", "165", "-w", wav, texto],
                           stderr=subprocess.DEVNULL)
@@ -53,23 +84,27 @@ def gerar_espeak(texto, mp3):
     os.remove(wav)
 
 
+MOTORES = [
+    ("edge-tts (pt-BR-AntonioNeural)", gerar_edge),
+    ("kokoro (pm_alex, pt-BR)", gerar_kokoro),
+    ("espeak-ng (mb-br3)", gerar_espeak),
+]
+
+
 async def main():
     os.makedirs(AUDIO_DIR, exist_ok=True)
-    motor = "edge-tts"
-    for i, texto in enumerate(CENAS, 1):
-        mp3 = os.path.join(AUDIO_DIR, f"cena{i}.mp3")
-        if motor == "edge-tts":
-            try:
-                await gerar_edge(texto, mp3)
-                continue
-            except Exception as e:  # noqa: BLE001
-                print(f"[aviso] edge-tts falhou ({type(e).__name__}: {e}); "
-                      "usando voz offline espeak-ng/mbrola.")
-                motor = "espeak-ng (mb-br3)"
-                # Regera as cenas anteriores para manter a mesma voz no vídeo todo.
-                for j in range(1, i):
-                    gerar_espeak(CENAS[j - 1], os.path.join(AUDIO_DIR, f"cena{j}.mp3"))
-        gerar_espeak(texto, mp3)
+    # Usa o primeiro motor que funcionar e mantém a mesma voz em todas as cenas.
+    for motor, gerar in MOTORES:
+        try:
+            for i, texto in enumerate(CENAS, 1):
+                r = gerar(texto, os.path.join(AUDIO_DIR, f"cena{i}.mp3"))
+                if asyncio.iscoroutine(r):
+                    await r
+            break
+        except Exception as e:  # noqa: BLE001
+            print(f"[aviso] {motor} falhou ({type(e).__name__}: {str(e)[:200]}); tentando o próximo motor.")
+    else:
+        raise SystemExit("Nenhum motor de TTS funcionou.")
 
     # Converte cada cena em WAV (com o silêncio do intervalo) e concatena.
     lista = []
@@ -95,6 +130,7 @@ async def main():
         f.write("\n".join(lista) + "\n")
     subprocess.check_call([
         "ffmpeg", "-y", "-v", "error", "-f", "concat", "-safe", "0", "-i", lista_path,
+        "-af", "loudnorm=I=-16:TP=-1.5:LRA=11", "-ar", "44100",
         "-c:a", "libmp3lame", "-b:a", "192k", os.path.join(HERE, "narration.mp3"),
     ])
 

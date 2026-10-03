@@ -1,47 +1,47 @@
 {
-  "total": 56.216,
-  "motor_tts": "espeak-ng (mb-br3)",
+  "total": 64.366,
+  "motor_tts": "kokoro (pm_alex, pt-BR)",
   "cenas": [
     {
       "cena": 1,
       "start": 0.0,
-      "end": 5.179,
-      "fala": 4.65,
+      "end": 5.784,
+      "fala": 5.232,
       "texto": "Existe mesmo voto útil no primeiro turno? Vamos olhar para a matemática da urna no papel."
     },
     {
       "cena": 2,
-      "start": 5.179,
-      "end": 12.259,
-      "fala": 6.557,
+      "start": 5.784,
+      "end": 14.405,
+      "fala": 8.088,
       "texto": "Para vencer a eleição já no primeiro turno, qualquer candidato precisa atingir a linha mágica de cinquenta por cento mais um dos votos válidos."
     },
     {
       "cena": 3,
-      "start": 12.259,
-      "end": 22.418,
-      "fala": 9.613,
+      "start": 14.405,
+      "end": 26.781,
+      "fala": 11.832,
       "texto": "Imagine que o Candidato A está na frente com quarenta e três por cento. Logo atrás vem o Candidato B com vinte e oito por cento, e outros três nomes do mesmo campo político têm seis, cinco e quatro por cento."
     },
     {
       "cena": 4,
-      "start": 22.418,
-      "end": 30.156,
-      "fala": 7.21,
+      "start": 26.781,
+      "end": 35.616,
+      "fala": 8.304,
       "texto": "Muita gente diz: tire o voto dos candidatos menores e passe para o B para derrotar o A no primeiro turno. Mas veja o que acontece quando somamos tudo."
     },
     {
       "cena": 5,
-      "start": 30.156,
-      "end": 39.312,
-      "fala": 8.62,
+      "start": 35.616,
+      "end": 45.539,
+      "fala": 9.384,
       "texto": "O Candidato B chegou aos cinquenta por cento mais um para ganhar no primeiro turno? Não. E o Candidato A perdeu algum voto com essa troca? Zero. A barra dele continua intacta."
     },
     {
       "cena": 6,
-      "start": 39.312,
-      "end": 56.17,
-      "fala": 14.42,
+      "start": 45.539,
+      "end": 64.316,
+      "fala": 16.344,
       "texto": "Matematicamente, trocar votos dentro da oposição não tira um milímetro do líder no primeiro turno. Para reduzir a porcentagem dele, é preciso tirar votos diretamente dele ou trazer novos eleitores. No primeiro turno, essa disputa serve apenas para medir força política para o segundo turno."
     }
   ]
