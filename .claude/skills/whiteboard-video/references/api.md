@@ -118,11 +118,14 @@ Efeitos precisam ser **funções puras de t**, sem estado entre quadros, porque 
 
 `WB.newPage(cena, f0 = 0, f1 = 0.06)` faz a mão puxar a folha atual para cima e revela uma folha em branco. Tudo o que for criado depois disso vai para a folha nova. Use quando o quadro encher ou quando a narrativa mudar de parte (por exemplo, explicação → história → conclusão). Deixe uns 0,6–1,4 s de `pausa` na cena anterior para a virada não atropelar a fala.
 
-## 8. Redes sociais
+## 8. Redes sociais (sem logos de plataformas!)
 
-- `projeto.json` → `"marca": { "instagram": "usuario", "tiktok": "usuario" }`. Com isso, a **marca d'água** com ícones e @ aparece no rodapé durante todo o vídeo; `"marcaDagua": false` desliga.
-- `WB.ctaRedes(cena, f0, f1, { y: 780, titulo: 'Gostou? Me segue!', iconSize: 190, cor })` desenha o título e, para cada rede, ícone + nome + @. Ocupa de `y` até ~`y + 180 + n·280`. A marca d'água some quando o CTA começa.
-- Ícones avulsos: `WB.igIcon(x, y, S, parent, larg)` / `WB.ttIcon(...)` → `{ bg, outline, rest }`. Desenhe `outline`, use `fillAfter(bg, outline)` e depois desenhe `rest`.
+**Não coloque logos do Instagram, TikTok, YouTube etc. no vídeo.** O TikTok trata logo ou marca d'água de outra rede como conteúdo reaproveitado ("não original") e tira o vídeo do "Para Você"; isso já aconteceu com um vídeo do perfil. Por padrão o motor mostra só o @ com o **caderninho amarelo** da marca.
+
+- `projeto.json` → `"marca": { "handle": "caderno_amarelo", "nome": "Caderno Amarelo" }`. Com isso, a **marca d'água** (caderninho + @) aparece no rodapé durante todo o vídeo; `"marcaDagua": false` desliga. Se os @ forem diferentes por rede, use `"instagram"`/`"tiktok"` (aparecem os dois @, ainda sem logos). `"logos": true` reativa os ícones das plataformas, mas evite.
+- `WB.ctaRedes(cena, f0, f1, { y: 780, titulo: 'Gostou? Me segue!', iconSize: 190, cor })` desenha o título, o caderninho e o @. Ocupa de `y` até ~`y + 180 + n·280`. A marca d'água some quando o CTA começa.
+- Ícone avulso: `WB.notebookIcon(x, y, S, parent, larg)` → `{ bg, outline, rest }`. Desenhe `outline`, use `fillAfter(bg, outline)` e depois desenhe `rest`.
+- **Na fala** pode dizer "me segue no Instagram e no TikTok"; o problema é só o visual.
 
 ## 9. Armadilhas comuns
 

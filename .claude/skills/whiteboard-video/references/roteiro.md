@@ -115,6 +115,9 @@ O perfil vive de credibilidade: um número inventado, quando alguém desmente no
 #<tema> #<tema2> #<subtema> #aprendanotiktok #educação #fyp #foryou
 ```
 Inclua mais 2 variações curtas. Dicas de publicação:
+- **Capa:** escolha um quadro do começo (título), nunca o quadro final com @/CTA.
+- **Uma conta por vídeo:** não poste o mesmo vídeo em dois perfis (o TikTok marca o repetido como "não original"); para divulgar no perfil pessoal, use "repostar" ou compartilhe o link.
+- **Visibilidade restrita por "conteúdo não original"** → recorrer pelo app ("Recurso"), explicando que animação e narração são originais.
 - Na capa, um texto curto em maiúsculas com a pergunta.
 - Fixe um comentário próprio com uma pergunta.
 - Responda os primeiros comentários.

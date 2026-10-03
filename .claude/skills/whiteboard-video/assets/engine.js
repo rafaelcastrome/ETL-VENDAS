@@ -499,11 +499,29 @@
     };
     return { bg, outline, rest: [note(-S * 0.03, -S * 0.02, '#25f4ee'), note(S * 0.03, S * 0.02, '#fe2c55'), note(0, 0, '#ffffff')] };
   }
+  // Ícone neutro da marca: caderninho amarelo (sem logo de nenhuma plataforma).
+  function notebookIcon(x, y, S, parent, w) {
+    const r = S * 0.12, bx = x + S * 0.12, bw = S * 0.78;
+    const bg = mk('path', { d: roundRectPath(bx, y, bw, S, r), fill: '#ffd23f', 'fill-opacity': 0 }, parent);
+    const outline = strokePath(roundRectPath(bx, y, bw, S, r), INK.black, w, parent);
+    const rest = [];
+    for (let i = 0; i < 4; i++) {
+      const yy = y + S * (0.14 + i * 0.22);
+      rest.push(strokePath(`M ${bx + S * 0.08} ${yy} Q ${x} ${yy} ${x} ${yy + S * 0.06} Q ${x} ${yy + S * 0.12} ${bx + S * 0.1} ${yy + S * 0.12}`, INK.black, w * 0.8, parent));
+    }
+    rest.push(strokePath(`M ${bx + bw * 0.72} ${y} L ${bx + bw * 0.72} ${y + S * 0.3} L ${bx + bw * 0.8} ${y + S * 0.24} L ${bx + bw * 0.88} ${y + S * 0.3} L ${bx + bw * 0.88} ${y}`, INK.red, w * 0.8, parent));
+    return { bg, outline, rest };
+  }
+  // IMPORTANTE: por padrão NÃO mostramos logos de plataformas (Instagram/TikTok). O TikTok trata
+  // logo/marca d'água de outra rede como conteúdo reaproveitado e tira o vídeo do "Para Você".
+  // Só o @ (sem repetir quando é igual nas redes) com o caderninho da marca. marca.logos=true reativa os ícones.
   const marca = projeto.marca || {};
-  const redes = [
-    marca.instagram && { nome: 'Instagram', handle: '@' + marca.instagram.replace(/^@/, ''), icon: igIcon },
-    marca.tiktok && { nome: 'TikTok', handle: '@' + marca.tiktok.replace(/^@/, ''), icon: ttIcon },
-  ].filter(Boolean);
+  const norm = (h) => '@' + String(h).replace(/^@/, '');
+  const redes = marca.logos === true ? [
+    marca.instagram && { nome: 'Instagram', handle: norm(marca.instagram), icon: igIcon },
+    marca.tiktok && { nome: 'TikTok', handle: norm(marca.tiktok), icon: ttIcon },
+  ].filter(Boolean) : [...new Set([marca.handle, marca.instagram, marca.tiktok].filter(Boolean).map(norm))]
+    .map(h => ({ nome: marca.nome || '', handle: h, icon: notebookIcon }));
   let watermarkHideAt = Infinity;
   // Chamada para ação: "Gostou? Me segue!" + ícones desenhados + @. y = topo do bloco.
   function ctaRedes(scene, f0, f1, opts = {}) {
@@ -522,8 +540,8 @@
       draw(scene, f + step * 0.55, f + step, ic.rest);
       f += step;
       draw(scene, f, f + step, [
-        textStrokes(r.nome, 385, y + S * 0.3, 50, INK.gray).strokes,
-        textStrokes(r.handle, 380, y + S * 0.79, 84, INK.black).strokes,
+        r.nome ? textStrokes(r.nome, 385, y + S * 0.3, 50, INK.gray).strokes : [],
+        textStrokes(r.handle, 380, y + (r.nome ? S * 0.79 : S * 0.62), 84, INK.black).strokes,
       ]);
       f += step;
     });
@@ -557,7 +575,7 @@
     get layer() { return inkLayer; },
     overlay,
     roughSeg, roughLine, roughRect, zigzagHatch, dashedLine, wavyLine, loopEllipse, arrowHead,
-    arcPath, circlePath, roundRectPath, cloudPath, C, igIcon, ttIcon, ctaRedes,
+    arcPath, circlePath, roundRectPath, cloudPath, C, igIcon, ttIcon, notebookIcon, ctaRedes,
   };
   if (typeof window.CENAS !== 'function') throw new Error('cenas.js precisa definir window.CENAS = function (WB) {...}');
   window.CENAS(WB);
