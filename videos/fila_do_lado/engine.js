@@ -73,6 +73,7 @@
     </linearGradient>
   </defs>
   <g id="pages"></g>
+  <g id="overlay" filter="url(#marker)"></g>
   <rect width="${W}" height="${H}" filter="url(#paperNoise)" opacity="0.35"/>
   <rect width="${W}" height="${H}" fill="url(#vignette)"/>
   <g id="watermark" opacity="0"></g>
@@ -86,6 +87,7 @@
   const handRot = svg.querySelector('#handRot');
   const tintEls = [...svg.querySelectorAll('.ink-tint')];
   const watermark = svg.querySelector('#watermark');
+  const overlay = svg.querySelector('#overlay');   // camada fixa: não vira junto com a folha
 
   const [projeto, timeline, fontBuf] = await Promise.all([
     fetch('projeto.json').then(r => r.json()),
@@ -553,6 +555,7 @@
     at, draw, write, writeLines, effect, handFollow, restHand, moveGroup, fade, transform, fillAfter, newPage,
     strokePath, textStrokes, measure, wrap, showNow, mk, group,
     get layer() { return inkLayer; },
+    overlay,
     roughSeg, roughLine, roughRect, zigzagHatch, dashedLine, wavyLine, loopEllipse, arrowHead,
     arcPath, circlePath, roundRectPath, cloudPath, C, igIcon, ttIcon, ctaRedes,
   };

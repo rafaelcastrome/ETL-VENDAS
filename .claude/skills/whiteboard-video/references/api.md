@@ -78,6 +78,8 @@ Geradores de `d` (strings SVG):
 - `arcPath(cx,cy,rx,ry,a0,a1)`: arco de elipse em radianos (0 = direita, π/2 = baixo); ex.: base de moeda = `arcPath(cx,cy,rx,ry,0,Math.PI)`
 - `arrowHead(x,y,ângulo,tamanho)`, `circlePath(cx,cy,r)`, `roundRectPath(x,y,w,h,r)`, `cloudPath(cx,cy,rx,ry)`
 
+Camada fixa: `WB.overlay` é um grupo acima de todas as folhas que **não sai quando a página vira**. Passe-o como `parent` (ex.: `WB.group(WB.overlay)`, `WB.textStrokes(..., WB.overlay)`) para elementos que atravessam o vídeo, como um post-it com "?" colado no canto desde o gancho e revelado no clímax.
+
 Grupos: `const g = WB.group(parent?, transform?)`. Elementos livres: `WB.mk('path', {...atributos}, parent)`. Elementos criados com `mk` aparecem desde o início, sem animação, então esconda-os com `opacity` 0 e mostre com `fade`.
 
 ## 5. Componentes prontos (`const { C } = WB`)

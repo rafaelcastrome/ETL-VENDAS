@@ -1,73 +1,71 @@
-// "Por que a fila do lado anda mais rápido?" (Caderno Amarelo)
-// Folha 1 (cenas 1-3): mercado com 3 caixas + probabilidade.
-// Folha 2 (cenas 4-5): estudo da Nature (1999) com as faixas + os 3 motivos.
-// Folha 3 (cenas 6-7): moral, fila única e redes.
+// "Por que a fila do lado anda mais rápido?" — versão com arco de retenção (Caderno Amarelo).
+// Gancho: um post-it com "?" (o segredo) fica colado no canto desde o 1º segundo (camada fixa WB.overlay).
+// Meio: matemática (1 em 3) -> "mas por que parece SEMPRE?" -> teste da Nature -> "chuta aí" -> mecanismo.
+// Clímax: o post-it voa para o centro, cresce e revela "70%"... e a faixa era mais LENTA.
 window.CENAS = function (WB) {
   const { INK, C } = WB;
-  const QX = [250, 540, 830];   // centro de cada fila/caixa
+  const QX = [250, 540, 830];
 
-  // ---------- CENA 1: o mercado ----------
-  WB.write(1, 0.02, 0.16, 'Por que a fila do lado', 540, 140, 88, INK.black, { anchor: 'middle' });
-  const t2 = WB.write(1, 0.16, 0.26, 'anda mais rápido?', 540, 240, 96, INK.red, { anchor: 'middle' });
-  WB.draw(1, 0.26, 0.29, C.underline(540 - t2.width / 2, 540 + t2.width / 2, 270));
-  WB.draw(1, 0.30, 0.42, QX.map((x, i) => [
-    C.box(x - 60, 330, x + 60, 400, INK.black, 7),
-    WB.textStrokes(String(i + 1), x, 384, 54, INK.black, null, 'middle').strokes,
+  // ---------- post-it do segredo (atravessa as folhas) ----------
+  const postit = WB.group(WB.overlay);
+  const inner = WB.group(postit, 'rotate(4 940 140)');
+  const pd = 'M 850 50 L 1030 50 L 1030 214 Q 1000 234 850 230 Z';
+  const pbg = WB.mk('path', { d: pd, fill: '#ffe066', 'fill-opacity': 0 }, inner);
+  const pout = WB.strokePath(pd, '#a0790a', 4, inner);
+  const mist = WB.group(inner);
+  const interrog = WB.textStrokes('?', 940, 182, 120, INK.red, mist, 'middle');
+  const segredo = WB.textStrokes('segredo', 940, 221, 30, INK.black, mist, 'middle');
+
+  // ---------- CENA 1: gancho + promessa ----------
+  WB.write(1, 0.02, 0.18, 'Por que a fila do lado', 450, 140, 82, INK.black, { anchor: 'middle' });
+  const t2 = WB.write(1, 0.18, 0.30, 'anda mais rápido?', 450, 240, 92, INK.red, { anchor: 'middle' });
+  WB.draw(1, 0.30, 0.33, C.underline(450 - t2.width / 2, 450 + t2.width / 2, 270));
+  WB.draw(1, 0.52, 0.64, pout);
+  WB.fillAfter(pbg, pout);
+  WB.draw(1, 0.66, 0.73, interrog.strokes);
+  WB.draw(1, 0.73, 0.78, segredo.strokes);
+  WB.draw(1, 0.80, 0.84, WB.strokePath('M 820 120 Q 790 150 800 190 M 800 190 L 786 172 M 800 190 L 812 174', INK.red, 5));
+  WB.write(1, 0.84, 0.95, '(e não é azar!)', 450, 350, 56, INK.gray, { anchor: 'middle' });
+
+  // ---------- CENA 2: a matemática ----------
+  WB.draw(2, 0.12, 0.24, QX.map((x, i) => [
+    C.box(x - 60, 420, x + 60, 500, INK.black, 7),
+    WB.textStrokes(String(i + 1), x, 480, 58, INK.black, null, 'middle').strokes,
   ]));
   const heads = [];
   QX.forEach((x, q) => {
-    const n = q === 1 ? 5 : 4;
-    for (let k = 0; k < n; k++) {
-      if (q === 1 && k === n - 1) continue;          // o último da fila do meio é "você"
-      heads.push(WB.strokePath(WB.circlePath(x, 470 + k * 72, 24), INK.black, 6));
-    }
+    for (let k = 0; k < 4; k++) heads.push(WB.strokePath(WB.circlePath(x, 580 + k * 80, 28), INK.black, 6));
   });
-  WB.draw(1, 0.42, 0.56, heads);
-  // você: carinha brava no fim da fila do meio
-  const vy = 470 + 4 * 72;
-  WB.draw(1, 0.56, 0.62, [
-    WB.strokePath(WB.circlePath(540, vy, 28), INK.red, 7),
-    WB.strokePath(`M 528 ${vy - 8} L 532 ${vy - 6} M 552 ${vy - 8} L 548 ${vy - 6}`, INK.red, 6),
-    WB.strokePath(`M 528 ${vy + 14} Q 540 ${vy + 4} 552 ${vy + 14}`, INK.red, 5),
-    WB.textStrokes('você', 585, vy + 16, 50, INK.red).strokes,
+  WB.draw(2, 0.24, 0.36, heads);
+  const vy = 580 + 4 * 80;
+  WB.draw(2, 0.36, 0.42, [
+    WB.strokePath(WB.circlePath(540, vy, 30), INK.red, 7),
+    WB.strokePath(`M 527 ${vy - 9} L 532 ${vy - 6} M 553 ${vy - 9} L 548 ${vy - 6}`, INK.red, 6),
+    WB.strokePath(`M 527 ${vy + 15} Q 540 ${vy + 4} 553 ${vy + 15}`, INK.red, 5),
+    WB.textStrokes('você', 590, vy + 16, 54, INK.red).strokes,
   ]);
-  // a fila do lado "voando"
-  WB.draw(1, 0.62, 0.72, [
-    WB.strokePath(`M 880 500 L 940 500 M 880 560 L 950 560 M 880 620 L 935 620`, INK.orange, 6),
-    WB.textStrokes('zum!', 880, 450, 52, INK.orange).strokes,
+  WB.write(2, 0.42, 0.48, 'sua fila ganha:', 540, 1040, 58, INK.black, { anchor: 'middle' });
+  WB.write(2, 0.48, 0.58, '1 em 3 = 33%', 540, 1135, 96, INK.green, { anchor: 'middle' });
+  WB.draw(2, 0.58, 0.63, [
+    WB.strokePath('M 880 600 L 950 600 M 880 670 L 960 670 M 880 740 L 945 740', INK.orange, 6),
+    WB.textStrokes('zum!', 880, 548, 54, INK.orange).strokes,
   ]);
-  // balão "de novo?!"
-  WB.draw(1, 0.74, 0.88, [
-    WB.strokePath(WB.roundRectPath(110, 740, 300, 92, 30), INK.black, 6),
-    WB.strokePath(`M 380 800 L 500 ${vy} L 360 828`, INK.black, 6),
-    WB.textStrokes('de novo?!', 260, 805, 60, INK.red, null, 'middle').strokes,
-  ]);
+  WB.write(2, 0.64, 0.70, 'outra fila ganha:', 540, 1235, 58, INK.black, { anchor: 'middle' });
+  const p67 = WB.write(2, 0.70, 0.86, '2 em 3 = 67%!', 540, 1335, 96, INK.red, { anchor: 'middle' });
+  WB.draw(2, 0.86, 0.89, C.underline(540 - p67.width / 2, 540 + p67.width / 2, 1362));
+  WB.restHand(2, 0.90, 0.99);
 
-  // ---------- CENA 2: a conta ----------
-  WB.write(2, 0.16, 0.34, 'Sua fila ser a mais rápida:', 540, 935, 60, INK.black, { anchor: 'middle' });
-  WB.write(2, 0.34, 0.50, '1 em 3 = 33%', 540, 1030, 92, INK.green, { anchor: 'middle' });
-  WB.write(2, 0.54, 0.66, 'Outra fila ganhar:', 540, 1120, 60, INK.black, { anchor: 'middle' });
-  const p67 = WB.write(2, 0.66, 0.84, '2 em 3 = 67%!', 540, 1215, 92, INK.red, { anchor: 'middle' });
-  WB.draw(2, 0.85, 0.90, C.underline(540 - p67.width / 2, 540 + p67.width / 2, 1240));
-
-  // ---------- CENA 3: mais caixas ----------
-  WB.write(3, 0.04, 0.33, '5 caixas? 1 em 5 = 20%', 540, 1330, 68, INK.black, { anchor: 'middle' });
-  WB.write(3, 0.38, 0.56, 'O universo não te odeia.', 540, 1425, 66, INK.blue, { anchor: 'middle' });
-  WB.write(3, 0.56, 0.78, 'Só tem mais filas que você!', 540, 1505, 66, INK.blue, { anchor: 'middle' });
-  WB.restHand(3, 0.80, 0.99);
-
-  // ---------- CENA 4: o estudo da Nature ----------
-  WB.newPage(4, 0.0, 0.05);
-  const est = WB.write(4, 0.06, 0.14, 'Tem até estudo!', 540, 165, 100, INK.red, { anchor: 'middle' });
-  WB.draw(4, 0.14, 0.16, C.underline(540 - est.width / 2, 540 + est.width / 2, 195));
-  const nat = WB.textStrokes('revista Nature, 1999', 540, 272, 54, INK.gray, null, 'middle');
-  WB.draw(4, 0.17, 0.24, [C.box(540 - nat.width / 2 - 24, 222, 540 + nat.width / 2 + 24, 292, INK.gray, 5), nat.strokes]);
-  // pista vista de cima: sua faixa (esq.) e a faixa do lado (dir.)
+  // ---------- CENA 3: re-gancho + o teste da Nature ----------
+  WB.newPage(3, 0.0, 0.05);
+  const sem = WB.write(3, 0.06, 0.30, 'Mas por que parece SEMPRE?', 420, 165, 64, INK.red, { anchor: 'middle' });
+  WB.draw(3, 0.30, 0.33, C.underline(420 - sem.width / 2, 420 + sem.width / 2, 192));
+  const nat = WB.textStrokes('revista Nature, 1999', 450, 285, 56, INK.gray, null, 'middle');
+  WB.draw(3, 0.55, 0.70, [C.box(450 - nat.width / 2 - 24, 233, 450 + nat.width / 2 + 24, 305, INK.gray, 5), nat.strokes]);
   let dash = '';
-  for (let y = 330; y < 780; y += 60) dash += `M 520 ${y} L 520 ${y + 34} `;
-  WB.draw(4, 0.24, 0.32, [
-    WB.strokePath(WB.roughLine(260, 320, 260, 790, 2), INK.black, 7),
-    WB.strokePath(WB.roughLine(780, 320, 780, 790, 2), INK.black, 7),
+  for (let y = 340; y < 790; y += 60) dash += `M 520 ${y} L 520 ${y + 34} `;
+  WB.draw(3, 0.72, 0.82, [
+    WB.strokePath(WB.roughLine(260, 330, 260, 800, 2), INK.black, 7),
+    WB.strokePath(WB.roughLine(780, 330, 780, 800, 2), INK.black, 7),
     WB.strokePath(dash, INK.black, 6),
   ]);
   const car = (cx, cy, color, parent) => [
@@ -75,38 +73,49 @@ window.CENAS = function (WB) {
     WB.strokePath(WB.roundRectPath(cx - 28, cy - 34, 56, 34, 8), color, 5, parent),
   ];
   const passa = WB.group();
-  WB.draw(4, 0.32, 0.42, [car(390, 560, INK.blue), car(650, 700, INK.orange, passa)]);
-  WB.write(4, 0.42, 0.50, 'sua faixa', 390, 380, 48, INK.blue, { anchor: 'middle' });
-  WB.write(4, 0.50, 0.56, '120 alunos de autoescola', 540, 870, 60, INK.black, { anchor: 'middle' });
-  WB.write(4, 0.56, 0.72, '70%: "a do lado é mais rápida!"', 540, 960, 64, INK.orange, { anchor: 'middle' });
-  WB.write(4, 0.74, 0.92, '(mas era um pouquinho mais lenta)', 540, 1040, 54, INK.red, { anchor: 'middle' });
+  WB.draw(3, 0.82, 0.94, [car(390, 560, INK.blue), car(650, 710, INK.orange, passa)]);
 
-  // ---------- CENA 5: os motivos ----------
-  WB.moveGroup(5, 0.03, 0.16, passa, 0, -300, { grab: { x: 650, y: 760 }, arc: 0, color: INK.orange });
-  WB.write(5, 0.17, 0.22, 'fui!', 698, 445, 50, INK.orange);
-  WB.writeLines(5, 0.24, 0.42, ['1. Quem te passa fica', '    um tempão na sua frente'], 120, 1150, 60, INK.black, { lineHeight: 70 });
-  WB.writeLines(5, 0.45, 0.63, ['2. Quem você passa', '    some no retrovisor'], 120, 1300, 60, INK.black, { lineHeight: 70 });
-  WB.write(5, 0.66, 0.86, '3. Ser ultrapassado incomoda mais!', 120, 1455, 60, INK.red);
-  WB.restHand(5, 0.88, 0.99);
+  // ---------- CENA 4: o teste + "chuta aí" ----------
+  WB.write(4, 0.03, 0.10, 'sua faixa', 390, 390, 46, INK.blue, { anchor: 'middle' });
+  WB.write(4, 0.10, 0.17, 'a do lado', 650, 390, 46, INK.orange, { anchor: 'middle' });
+  WB.write(4, 0.20, 0.40, '120 alunos de autoescola', 520, 885, 64, INK.black, { anchor: 'middle' });
+  WB.write(4, 0.45, 0.66, 'Qual anda mais rápido?', 520, 985, 70, INK.blue, { anchor: 'middle' });
+  WB.write(4, 0.72, 0.90, 'Chuta: quantos erraram?', 520, 1085, 70, INK.red, { anchor: 'middle' });
 
-  // ---------- CENA 6: moral + fila única ----------
-  WB.newPage(6, 0.0, 0.05);
-  const mor = WB.write(6, 0.06, 0.15, 'Moral da história', 540, 175, 100, INK.red, { anchor: 'middle' });
-  WB.draw(6, 0.15, 0.17, C.underline(540 - mor.width / 2, 540 + mor.width / 2, 205));
-  WB.write(6, 0.18, 0.30, 'Trocar de fila toda hora', 540, 305, 68, INK.black, { anchor: 'middle' });
-  WB.write(6, 0.30, 0.42, 'só te faz perder o lugar!', 540, 385, 68, INK.black, { anchor: 'middle' });
-  // fila única em zigue-zague levando a 3 caixas
-  const zig = 'M 180 450 L 700 450 Q 740 450 740 490 Q 740 530 700 530 L 230 530 Q 190 530 190 570 Q 190 610 230 610 L 790 610';
-  WB.draw(6, 0.45, 0.55, [
-    WB.strokePath(zig, INK.blue, 8),
-    WB.strokePath(WB.arrowHead(790, 610, 0, 24), INK.blue, 8),
-    [480, 560, 640].map(y => C.box(830, y - 30, 920, y + 30, INK.black, 6)),
+  // ---------- CENA 5: o mecanismo (suspense antes da resposta) ----------
+  WB.moveGroup(5, 0.12, 0.28, passa, 0, -240, { grab: { x: 650, y: 770 }, arc: 0, color: INK.orange });
+  WB.write(5, 0.28, 0.32, 'fui!', 700, 500, 50, INK.orange);
+  WB.write(5, 0.34, 0.48, 'quem te passa: fica na frente', 520, 1200, 60, INK.black, { anchor: 'middle' });
+  WB.write(5, 0.50, 0.65, 'quem você passa: some!', 520, 1290, 60, INK.black, { anchor: 'middle' });
+  WB.writeLines(5, 0.68, 0.88, ['Seu cérebro só lembra', 'de quem te passou!'], 520, 1395, 68, INK.red, { anchor: 'middle', lineHeight: 78 });
+  WB.restHand(5, 0.90, 0.99);
+
+  // ---------- CENA 6: CLÍMAX — o post-it revela o segredo ----------
+  WB.newPage(6, 0.0, 0.07);
+  WB.write(6, 0.08, 0.16, 'O resultado:', 540, 230, 92, INK.black, { anchor: 'middle' });
+  const S = 2.8, tx = 540 - 940 * S, ty = 700 - 140 * S;
+  WB.transform(6, 0.16, 0.30, postit, { x: 0, y: 0, s: 1 }, { x: tx, y: ty, s: S });
+  {
+    const a = WB.at(6, 0.16), b = WB.at(6, 0.30);
+    WB.handFollow(a, b, (t) => {
+      const u = WB.ease(WB.clamp((t - a) / (b - a)));
+      const s = WB.lerp(1, S, u);
+      return { x: s * 1000 + WB.lerp(0, tx, u), y: s * 222 + WB.lerp(0, ty, u) };
+    }, INK.black);
+  }
+  WB.fade(6, 0.30, 0.34, mist, 1, 0);
+  WB.draw(6, 0.34, 0.48, WB.textStrokes('70%', 540, 760, 210, INK.red, WB.overlay, 'middle').strokes);
+  WB.draw(6, 0.48, 0.60, [
+    WB.textStrokes('acharam a do lado', 540, 850, 52, INK.black, WB.overlay, 'middle').strokes,
+    WB.textStrokes('mais rápida', 540, 910, 52, INK.black, WB.overlay, 'middle').strokes,
   ]);
-  WB.write(6, 0.55, 0.61, 'fila única', 465, 705, 64, INK.blue, { anchor: 'middle' });
-  WB.write(6, 0.63, 0.76, 'ninguém fica preso atrás', 540, 800, 60, INK.black, { anchor: 'middle' });
-  WB.write(6, 0.76, 0.88, 'do cliente das moedinhas!', 540, 875, 60, INK.black, { anchor: 'middle' });
-  WB.draw(6, 0.88, 0.94, [[0, 1, 2].map(i => WB.strokePath(WB.circlePath(925 + i * 6, 780 - i * 14, 24), INK.orange, 6))]);
+  const st = C.stamp('mas ela era mais LENTA!', 540, 1090, { size: 70, rot: -5 });
+  WB.draw(6, 0.62, 0.66, st.box);
+  WB.draw(6, 0.66, 0.86, st.text);
 
-  // ---------- CENA 7: comenta + redes ----------
-  WB.ctaRedes(7, 0.04, 0.62, { y: 950, iconSize: 160, titulo: 'Comenta e me segue!' });
+  // ---------- CENA 7: fechamento rápido + CTA ----------
+  WB.write(7, 0.03, 0.24, 'A fila do lado não é mais rápida…', 540, 1260, 58, INK.black, { anchor: 'middle' });
+  WB.write(7, 0.24, 0.40, '…ela só aparece mais!', 540, 1360, 84, INK.blue, { anchor: 'middle' });
+  WB.write(7, 0.46, 0.70, 'Me segue: @caderno_amarelo', 540, 1490, 64, INK.red, { anchor: 'middle' });
+  WB.restHand(7, 0.74, 0.99);
 };
