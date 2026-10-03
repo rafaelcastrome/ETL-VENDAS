@@ -1,6 +1,6 @@
 {
   "titulo": "Título do vídeo",
-  "marca": { "instagram": "rafaelcastrome", "tiktok": "rafaelcastro_me" },
+  "marca": { "instagram": "caderno_amarelo", "tiktok": "caderno_amarelo" },
   "marcaDagua": true,
   "voz": { "edge": "pt-BR-AntonioNeural", "edgeRate": "+10%", "kokoro": "pm_alex", "kokoroSpeed": 1.1 },
   "pausaPadrao": 0.6,

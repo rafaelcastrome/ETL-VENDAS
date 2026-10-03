@@ -18,7 +18,7 @@ Como funciona:
 ### 1. Entender o pedido e escrever o roteiro
 - Se o usuário trouxe roteiro/storyboard fechado, **use exatamente o dele**. Não reescreva falas.
 - Se trouxe só o tema ou contexto, escreva o roteiro seguindo `references/roteiro.md`: gancho, base, exemplo com números, virada, resumo, história curta, moral e CTA, com 6–9 cenas e 45–90 s. **Se o usuário pedir uma duração, ela manda**: use o orçamento de caracteres do `roteiro.md` para caber.
-- **Redes sociais:** por padrão use `instagram: rafaelcastrome` e `tiktok: rafaelcastro_me`. Se o usuário disser que o vídeo é para outro perfil, pergunte os @ e troque em `projeto.json`.
+- **Redes sociais:** por padrão use o perfil **Caderno Amarelo**: `instagram: caderno_amarelo` e `tiktok: caderno_amarelo` (fala: "Me segue no Instagrã e no Tic Tóc: arroba caderno ânderláin amarelo"). Se o usuário disser que o vídeo é para outro perfil, pergunte os @ e troque em `projeto.json`.
 - **Aprovação:** a renderização leva vários minutos (~1,3 quadro/s, ou seja, ~25 s de máquina por segundo de vídeo). Antes de gerar, mostre o roteiro em tabela (cena | fala | o que aparece na tela) e peça um OK, a não ser que o usuário tenha dito para fazer direto ou tenha fornecido o roteiro pronto.
 
 ### 2. Preparar o ambiente e o projeto
