@@ -1,0 +1,22 @@
+{
+  "titulo": "Por que a fila do lado anda mais rápido?",
+  "marca": { "instagram": "caderno_amarelo", "tiktok": "caderno_amarelo" },
+  "marcaDagua": true,
+  "voz": { "edge": "pt-BR-AntonioNeural", "edgeRate": "+10%", "kokoro": "pm_alex", "kokoroSpeed": 1.1 },
+  "pausaPadrao": 0.6,
+  "fontes": [
+    { "fato": "Com 3 filas, a chance da sua ser a mais rápida é 1 em 3 (2 em 3 de outra ganhar)", "fonte": "Probabilidade simples; explicação em Quartz ('Math explains why you never choose the fastest line') e Qminder", "url": "https://qz.com/1452655/math-explains-why-you-never-choose-the-fastest-line" },
+    { "fato": "Estudo publicado na Nature em 1999 (Redelmeier, Univ. de Toronto, e Tibshirani, Stanford): 120 alunos de autoescola viram vídeo da faixa ao lado; 70% acharam que ela era mais rápida, embora fosse um pouco mais lenta", "fonte": "Redelmeier & Tibshirani, 'Why cars in the next lane seem to go faster', Nature 401, 1999; ScienceDaily (30/08/1999); U of T Magazine", "url": "https://www.sciencedaily.com/releases/1999/08/990830184718.htm" },
+    { "fato": "Explicação: passamos mais tempo sendo ultrapassados; quem passa à frente fica à vista por mais tempo, quem ficou para trás some; ser ultrapassado pesa mais", "fonte": "Mesmo estudo (Nature, 1999), conforme ScienceDaily e Stanford Magazine ('A case of lane envy')", "url": "https://stanfordmag.org/contents/a-case-of-lane-envy" },
+    { "fato": "Bancos usam fila única com vários caixas para reduzir a espera média", "fonte": "Qminder, 'Why the other line always moves faster than yours'", "url": "https://www.qminder.com/blog/queue-management/other-queue-moves-faster" }
+  ],
+  "cenas": [
+    { "fala": "Você escolhe a fila do mercado e, pronto: a do lado começa a voar. Azar? Perseguição do universo? Pega o caderno, que a culpa é da matemática." },
+    { "fala": "Imagina três caixas. A chance da sua fila ser a mais rápida é de uma em três. Ou seja: em duas de cada três vezes, alguma outra fila vai ganhar da sua." },
+    { "fala": "E com cinco caixas, a chance cai pra uma em cinco. O universo não te odeia. Ele só tem mais filas do que você.", "pausa": 1.2 },
+    { "fala": "E tem até estudo! Em mil novecentos e noventa e nove, a revista Nature publicou um teste com cento e vinte alunos de autoescola. Setenta por cento acharam que a faixa do lado andava mais rápido, mesmo ela sendo um pouquinho mais lenta." },
+    { "fala": "O motivo: quem te ultrapassa fica um tempão na sua frente, esfregando na sua cara. Já quem você ultrapassa some no retrovisor. E ser ultrapassado incomoda muito mais.", "pausa": 1.2 },
+    { "fala": "Moral da história: trocar de fila toda hora só te faz perder o lugar. Por isso banco usa fila única: ninguém fica preso atrás do cliente que paga tudo em moedinha." },
+    { "fala": "Comenta aí a sua pior escolha de fila. E me segue no Instagrã e no Tic Tóc: arroba caderno ânderláin amarelo.", "pausa": 2.5 }
+  ]
+}
