@@ -7,26 +7,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=block" rel="stylesheet">
 <style>
-  :root {
-    --paper: #fbf5df;
-    --grid: rgba(70, 130, 200, 0.16);
-    --grid-strong: rgba(70, 130, 200, 0.26);
-    --margin: rgba(214, 40, 40, 0.35);
-  }
   html, body { margin: 0; padding: 0; background: #222; }
-  #stage {
-    position: relative; width: 1080px; height: 1920px; overflow: hidden;
-    background-color: var(--paper);
-    background-image:
-      linear-gradient(90deg, transparent 88px, var(--margin) 88px, var(--margin) 91px, transparent 91px),
-      linear-gradient(var(--grid-strong) 2px, transparent 2px),
-      linear-gradient(90deg, var(--grid-strong) 2px, transparent 2px),
-      linear-gradient(var(--grid) 1px, transparent 1px),
-      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-    background-size: 100% 100%, 216px 216px, 216px 216px, 54px 54px, 54px 54px;
-    background-position: 0 0, -2px 30px, 30px -2px, 0 30px, 30px 0;
-    font-family: 'Caveat', cursive;
-  }
+  #stage { position: relative; width: 1080px; height: 1920px; overflow: hidden; background: #fbf5df; }
   svg { position: absolute; left: 0; top: 0; }
 </style>
 </head>
@@ -68,10 +50,39 @@
         <stop offset="0.5" stop-color="#3567a0"/>
         <stop offset="1" stop-color="#1f4369"/>
       </linearGradient>
+      <!-- folha de caderno quadriculado -->
+      <pattern id="gridPat" x="30" y="30" width="216" height="216" patternUnits="userSpaceOnUse">
+        <g fill="rgba(70,130,200,0.16)">
+          <rect x="54" width="1" height="216"/><rect x="108" width="1" height="216"/><rect x="162" width="1" height="216"/>
+          <rect y="54" width="216" height="1"/><rect y="108" width="216" height="1"/><rect y="162" width="216" height="1"/>
+        </g>
+        <g fill="rgba(70,130,200,0.26)"><rect width="2" height="216"/><rect width="216" height="2"/></g>
+      </pattern>
+      <g id="paperBg">
+        <rect width="1080" height="1920" fill="#fbf5df"/>
+        <rect width="1080" height="1920" fill="url(#gridPat)"/>
+        <rect x="88" width="3" height="1920" fill="rgba(214,40,40,0.35)"/>
+      </g>
+      <linearGradient id="pageShadow" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#3c2a0a" stop-opacity="0.35"/>
+        <stop offset="1" stop-color="#3c2a0a" stop-opacity="0"/>
+      </linearGradient>
+      <linearGradient id="igGrad" x1="0" y1="1" x2="1" y2="0">
+        <stop offset="0" stop-color="#feda75"/>
+        <stop offset="0.3" stop-color="#fa7e1e"/>
+        <stop offset="0.6" stop-color="#d62976"/>
+        <stop offset="0.85" stop-color="#962fbf"/>
+        <stop offset="1" stop-color="#4f5bd5"/>
+      </linearGradient>
     </defs>
-    <rect width="1080" height="1920" filter="url(#paperNoise)" opacity="0.35"/>
+    <!-- folhas empilhadas: a de cima é "virada" (sobe) para revelar a próxima -->
+    <g id="page3"><use href="#paperBg"/><g id="ink3" filter="url(#marker)"></g></g>
+    <g id="page2"><use href="#paperBg"/><rect y="1920" width="1080" height="60" fill="url(#pageShadow)"/><g id="ink2" filter="url(#marker)"></g></g>
+    <g id="page1"><use href="#paperBg"/><rect y="1920" width="1080" height="60" fill="url(#pageShadow)"/><g id="ink" filter="url(#marker)"></g></g>
+    <rect width="1080" height="1920" filter="url(#paperNoise)" opacity="0.35" pointer-events="none"/>
     <rect width="1080" height="1920" fill="url(#vignette)"/>
-    <g id="ink" filter="url(#marker)"></g>
+    <!-- marca d'água com as redes sociais -->
+    <g id="watermark"></g>
 
     <!-- mão segurando o marcador; a ponta do marcador fica na origem (0,0) -->
     <g id="hand">
@@ -115,9 +126,9 @@
 (async function () {
   const NS = 'http://www.w3.org/2000/svg';
   const INK = { black: '#1f1f24', red: '#d62828', blue: '#1d4ed8', green: '#15803d', gray: '#8a8a8a' };
-  const REST = { x: 840, y: 1905 };          // mão "estacionada" na borda inferior
+  const REST = { x: 1000, y: 1912 };          // mão "estacionada" na borda inferior
   const svgEl = document.getElementById('svg');
-  const inkLayer = document.getElementById('ink');
+  let inkLayer = document.getElementById('ink');   // folha onde os próximos traços entram
   const hand = document.getElementById('hand');
   const handRot = document.getElementById('handRot');
   const tipEls = ['tip', 'capEnd', 'band'].map(id => document.getElementById(id));
@@ -261,6 +272,12 @@
   const handSegs = [];    // {t0, t1, pos(t), drawing, color}
   const effects = [];     // function(t)
 
+  function ptAt(s, l) {
+    if (!s.ctm) s.ctm = s.el.getCTM();
+    const p = s.el.getPointAtLength(l).matrixTransform(s.ctm);
+    return { x: p.x, y: p.y };
+  }
+
   function draw(scene, f0, f1, strokes) {
     strokes = strokes.flat(3);
     const t0 = at(scene, f0), t1 = at(scene, f1);
@@ -268,7 +285,7 @@
     const items = [];
     let prevEnd = null, total = 0;
     for (const s of strokes) {
-      const start = s.el.getPointAtLength(0);
+      const start = ptAt(s, 0);
       if (prevEnd) {
         const dist = Math.hypot(start.x - prevEnd.x, start.y - prevEnd.y);
         const w = dist * 0.3 + 4;
@@ -277,7 +294,7 @@
       }
       items.push({ type: 'stroke', s, w: s.len });
       total += s.len;
-      prevEnd = s.el.getPointAtLength(s.len);
+      prevEnd = ptAt(s, s.len);
     }
     let t = t0;
     for (const it of items) {
@@ -290,8 +307,7 @@
           t0: it.t0, t1: it.t1, drawing: true, color: s.color,
           pos: (tt) => {
             const u = clamp((tt - s.t0) / (s.t1 - s.t0));
-            const p = s.el.getPointAtLength(u * s.len);
-            return { x: p.x, y: p.y };
+            return ptAt(s, u * s.len);
           },
         });
       } else {
@@ -468,12 +484,196 @@
   }
   draw(6, 0.19, 0.31, textStrokes('Única forma de baixar', 392, 344, 62, INK.red).strokes);
   draw(6, 0.31, 0.39, textStrokes('o % do líder!', 392, 410, 62, INK.red).strokes);
-  draw(6, 0.42, 0.50, [strokePath(roughRect(48, 1432, 1032, 1838), INK.black, 8)]);
+  draw(6, 0.42, 0.50, [strokePath(roughRect(48, 1425, 1032, 1818), INK.black, 8)]);
   draw(6, 0.51, 0.66, textStrokes('Soma da oposição < 50%+1', 540, 1540, 84, INK.black, null, 'middle').strokes);
   draw(6, 0.67, 0.77, textStrokes('= Vai para o 2º turno', 540, 1652, 84, INK.black, null, 'middle').strokes);
   const last = textStrokes('de qualquer jeito!', 540, 1762, 84, INK.red, null, 'middle');
   draw(6, 0.78, 0.87, last.strokes);
   draw(6, 0.875, 0.905, [strokePath(wavyLine(540 - last.width / 2, 540 + last.width / 2, 1790, 5, 60), INK.red, 7)]);
+
+
+  // ---------- utilidades das cenas finais ----------
+  function circlePath(cx, cy, r) {
+    return `M ${cx + r} ${cy} A ${r} ${r} 0 1 1 ${cx - r} ${cy} A ${r} ${r} 0 1 1 ${cx + r} ${cy}`;
+  }
+  function roundRectPath(x, y, w, h, r) {
+    return `M ${x + r} ${y} L ${x + w - r} ${y} Q ${x + w} ${y} ${x + w} ${y + r} L ${x + w} ${y + h - r} ` +
+      `Q ${x + w} ${y + h} ${x + w - r} ${y + h} L ${x + r} ${y + h} Q ${x} ${y + h} ${x} ${y + h - r} ` +
+      `L ${x} ${y + r} Q ${x} ${y} ${x + r} ${y}`;
+  }
+  function cloudPath(cx, cy, rx, ry, n = 11) {
+    const pts = [];
+    for (let i = 0; i < n; i++) {
+      const a = -Math.PI / 2 + (i / n) * Math.PI * 2;
+      pts.push([cx + Math.cos(a) * rx, cy + Math.sin(a) * ry]);
+    }
+    let d = `M ${pts[0][0].toFixed(1)} ${pts[0][1].toFixed(1)}`;
+    for (let i = 0; i < n; i++) {
+      const p = pts[i], q = pts[(i + 1) % n];
+      const mx = (p[0] + q[0]) / 2, my = (p[1] + q[1]) / 2;
+      d += ` Q ${(mx + (mx - cx) * 0.35).toFixed(1)} ${(my + (my - cy) * 0.35).toFixed(1)} ${q[0].toFixed(1)} ${q[1].toFixed(1)}`;
+    }
+    return d;
+  }
+  // Ícones das redes, no mesmo traço de marcador. bg = preenchimento que aparece depois do contorno.
+  function igIcon(x, y, S, parent, w) {
+    const bg = mk('path', { d: roundRectPath(x, y, S, S, S * 0.28), fill: 'url(#igGrad)', 'fill-opacity': 0 }, parent);
+    const outline = strokePath(roundRectPath(x, y, S, S, S * 0.28), '#c13584', w, parent);
+    const rest = [
+      strokePath(roundRectPath(x + S * 0.2, y + S * 0.2, S * 0.6, S * 0.6, S * 0.18), '#ffffff', w, parent),
+      strokePath(circlePath(x + S / 2, y + S / 2, S * 0.14), '#ffffff', w, parent),
+      strokePath(circlePath(x + S * 0.69, y + S * 0.31, S * 0.015), '#ffffff', w * 1.2, parent),
+    ];
+    return { bg, outline, rest };
+  }
+  function ttIcon(x, y, S, parent, w) {
+    const bg = mk('path', { d: roundRectPath(x, y, S, S, S * 0.28), fill: '#111111', 'fill-opacity': 0 }, parent);
+    const outline = strokePath(roundRectPath(x, y, S, S, S * 0.28), '#111111', w, parent);
+    const note = (dx, dy, color) => {
+      const X = (k) => (x + S * k + dx).toFixed(1), Y = (k) => (y + S * k + dy).toFixed(1), r = (S * 0.13).toFixed(1);
+      return strokePath(`M ${X(0.76)} ${Y(0.37)} Q ${X(0.59)} ${Y(0.34)} ${X(0.56)} ${Y(0.18)} L ${X(0.56)} ${Y(0.66)} ` +
+        `A ${r} ${r} 0 1 1 ${X(0.30)} ${Y(0.66)} A ${r} ${r} 0 1 1 ${X(0.56)} ${Y(0.66)}`, color, S * 0.085, parent);
+    };
+    const rest = [note(-S * 0.03, -S * 0.02, '#25f4ee'), note(S * 0.03, S * 0.02, '#fe2c55'), note(0, 0, '#ffffff')];
+    return { bg, outline, rest };
+  }
+  function showNow(list) {
+    for (const s of list.flat(3)) {
+      s.el.style.visibility = 'visible';
+      s.el.style.strokeDashoffset = 0;
+      if (s.fillEl) s.fillEl.setAttribute('fill-opacity', 1);
+    }
+  }
+  function fillAfter(bg, strokeList, dur = 0.35) {
+    const s = strokeList.flat(3).slice(-1)[0];
+    effects.push((t) => bg.setAttribute('fill-opacity', clamp((t - s.t1) / dur).toFixed(3)));
+  }
+  // A folha de cima sobe (como virar a página do bloco), puxada pela mão.
+  function flipPage(pageEl, scene, f0, f1) {
+    const t0 = at(scene, f0), t1 = at(scene, f1);
+    const lift = (t) => ease(clamp((t - t0) / (t1 - t0)));
+    effects.push((t) => {
+      const u = lift(t);
+      pageEl.setAttribute('transform', u <= 0 ? '' :
+        `translate(0 ${(-2000 * u).toFixed(1)}) rotate(${(-4 * Math.sin(Math.PI * u)).toFixed(2)} 0 1920)`);
+      pageEl.style.display = u >= 1 ? 'none' : '';
+    });
+    handSegs.push({
+      t0, t1, drawing: false, color: INK.black,
+      pos: (t) => ({ x: 760 - 140 * lift(t), y: Math.max(260, 1890 - 2000 * lift(t)) }),
+    });
+  }
+
+  // ---------- CENA 7: a história do João ----------
+  inkLayer = document.getElementById('ink2');
+  flipPage(document.getElementById('page1'), 7, 0.0, 0.06);
+  const t7 = textStrokes('A história do João', 540, 195, 100, INK.black, null, 'middle');
+  draw(7, 0.07, 0.17, t7.strokes);
+  draw(7, 0.17, 0.20, strokePath(wavyLine(540 - t7.width / 2, 540 + t7.width / 2, 228, 6, 64), INK.blue, 8));
+  draw(7, 0.20, 0.30, [
+    strokePath(circlePath(230, 560, 58), INK.black, 7),
+    strokePath('M 207 545 L 209 549 M 250 545 L 252 549', INK.black, 9),
+    strokePath('M 205 578 Q 230 602 256 578', INK.black, 5),
+    strokePath(roughLine(230, 618, 232, 800, 2), INK.black, 7),
+    strokePath(roughLine(231, 670, 160, 750, 2), INK.black, 7),
+    strokePath(roughLine(231, 670, 305, 628, 2), INK.black, 7),
+    strokePath(roughLine(232, 800, 180, 920, 2), INK.black, 7),
+    strokePath(roughLine(232, 800, 285, 920, 2), INK.black, 7),
+    strokePath(roughRect(296, 566, 350, 630), INK.blue, 5),
+    textStrokes('João', 230, 990, 62, INK.black, null, 'middle').strokes,
+  ]);
+  draw(7, 0.31, 0.38, [
+    strokePath(circlePath(318, 512, 9), INK.black, 5),
+    strokePath(circlePath(354, 478, 14), INK.black, 5),
+    strokePath(cloudPath(700, 480, 290, 160), INK.black, 6),
+  ]);
+  draw(7, 0.38, 0.41, textStrokes('C', 575, 520, 120, INK.green, null, 'middle').strokes);
+  draw(7, 0.41, 0.44, [strokePath(roughLine(630, 478, 745, 478, 2), INK.black, 7), strokePath(arrowHead(745, 478, 0, 24), INK.black, 7)]);
+  draw(7, 0.44, 0.47, textStrokes('B', 805, 520, 120, INK.green, null, 'middle').strokes);
+  draw(7, 0.47, 0.55, textStrokes('p/ vencer o A no 1º turno!', 700, 592, 42, INK.black, null, 'middle').strokes);
+  draw(7, 0.56, 0.61, strokePath(roughRect(110, 1080, 970, 1580), INK.black, 8));
+  draw(7, 0.61, 0.67, textStrokes('Noite da apuração', 540, 1165, 66, INK.black, null, 'middle').strokes);
+  draw(7, 0.68, 0.74, textStrokes('A: 43%', 180, 1310, 100, INK.blue).strokes);
+  draw(7, 0.74, 0.79, textStrokes('B: 43%', 180, 1450, 100, INK.green).strokes);
+  {
+    const stamp = group();
+    stamp.setAttribute('transform', 'rotate(-12 735 1370)');
+    draw(7, 0.80, 0.83, strokePath(roughRect(545, 1295, 925, 1445), INK.red, 9, stamp));
+    draw(7, 0.83, 0.89, textStrokes('2º TURNO', 735, 1408, 100, INK.red, stamp, 'middle').strokes);
+  }
+  draw(7, 0.89, 0.96, textStrokes('…como iria de qualquer jeito!', 540, 1690, 64, INK.red, null, 'middle').strokes);
+
+  // ---------- CENA 8: moral da história + redes sociais ----------
+  inkLayer = document.getElementById('ink3');
+  flipPage(document.getElementById('page2'), 8, 0.0, 0.05);
+  const t8 = textStrokes('Moral da história', 540, 200, 104, INK.red, null, 'middle');
+  draw(8, 0.06, 0.13, t8.strokes);
+  draw(8, 0.13, 0.15, strokePath(wavyLine(540 - t8.width / 2, 540 + t8.width / 2, 234, 6, 64), INK.red, 8));
+  draw(8, 0.16, 0.24, textStrokes('No 1º turno, vote em quem', 540, 380, 72, INK.black, null, 'middle').strokes);
+  draw(8, 0.24, 0.31, textStrokes('realmente te representa.', 540, 468, 72, INK.black, null, 'middle').strokes);
+  draw(8, 0.32, 0.38, textStrokes('O confronto direto', 540, 585, 72, INK.blue, null, 'middle').strokes);
+  draw(8, 0.38, 0.45, textStrokes('fica para o 2º turno!', 540, 673, 72, INK.blue, null, 'middle').strokes);
+  draw(8, 0.48, 0.55, textStrokes('Gostou? Me segue!', 540, 860, 96, INK.green, null, 'middle').strokes);
+  {
+    const ig = igIcon(150, 960, 190, null, 12);
+    draw(8, 0.56, 0.60, ig.outline);
+    fillAfter(ig.bg, ig.outline);
+    draw(8, 0.60, 0.63, ig.rest);
+    draw(8, 0.63, 0.69, [
+      textStrokes('Instagram', 385, 1018, 50, INK.gray).strokes,
+      textStrokes('@rafaelcastrome', 380, 1110, 84, INK.black).strokes,
+    ]);
+    const tt = ttIcon(150, 1240, 190, null, 12);
+    draw(8, 0.70, 0.74, tt.outline);
+    fillAfter(tt.bg, tt.outline);
+    draw(8, 0.74, 0.77, tt.rest);
+    draw(8, 0.77, 0.84, [
+      textStrokes('TikTok', 385, 1298, 50, INK.gray).strokes,
+      textStrokes('@rafaelcastro_me', 380, 1390, 84, INK.black).strokes,
+    ]);
+  }
+  {
+    // urna de volta, agora com um "certo": fecha a história
+    const u = group();
+    const k = 0.42;
+    u.setAttribute('transform', `translate(${540 - 585 * k} ${1500 - 640 * k}) scale(${k})`);
+    draw(8, 0.85, 0.92, [
+      strokePath(roughRect(330, 820, 750, 1180), INK.black, 14, u),
+      strokePath('M 330 820 ' + roughSeg(330, 820, 420, 735) + ' ' + roughSeg(420, 735, 840, 735) + ' ' +
+        roughSeg(840, 735, 750, 820), INK.black, 14, u),
+      strokePath('M 840 735 ' + roughSeg(840, 735, 840, 1095) + ' ' + roughSeg(840, 1095, 750, 1180), INK.black, 14, u),
+      strokePath(roughRect(505, 765, 665, 790), INK.black, 10, u),
+    ]);
+    draw(8, 0.92, 0.95, strokePath('M 430 985 L 515 1080 L 685 880', INK.green, 26, u));
+  }
+
+  // ---------- marca d'água fixa com as redes ----------
+  {
+    const wm = document.getElementById('watermark');
+    const S = 42, fs = 36, y = 1856;
+    const h1 = '@rafaelcastrome', h2 = '@rafaelcastro_me';
+    const w1 = font.getAdvanceWidth(h1, fs), w2 = font.getAdvanceWidth(h2, fs);
+    const total = S + 12 + w1 + 44 + S + 12 + w2;
+    let x = 540 - total / 2;
+    mk('rect', {
+      x: x - 22, y: y - 10, width: total + 44, height: S + 20, rx: (S + 20) / 2,
+      fill: '#fffaf0', 'fill-opacity': 0.9, stroke: '#1f1f24', 'stroke-opacity': 0.25, 'stroke-width': 2,
+    }, wm);
+    const ig = igIcon(x, y, S, wm, 4);
+    ig.bg.setAttribute('fill-opacity', 1);
+    showNow([ig.outline, ig.rest]);
+    x += S + 12;
+    showNow(textStrokes(h1, x, y + S * 0.78, fs, INK.black, wm).strokes);
+    x += w1 + 44;
+    const tt = ttIcon(x, y, S, wm, 4);
+    tt.bg.setAttribute('fill-opacity', 1);
+    showNow([tt.outline, tt.rest]);
+    x += S + 12;
+    showNow(textStrokes(h2, x, y + S * 0.78, fs, INK.black, wm).strokes);
+    // aparece no início e sai na última cena, onde os perfis ganham destaque
+    const a1 = at(8, 0.02);
+    effects.push((t) => wm.setAttribute('opacity', (clamp((t - 0.4) / 0.6) * (1 - clamp((t - a1) / 0.5))).toFixed(3)));
+  }
 
   handSegs.sort((a, b) => a.t0 - b.t0);
   const allStrokes = drawItems.flatMap(d => d.strokes);

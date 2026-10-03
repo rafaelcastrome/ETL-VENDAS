@@ -1,5 +1,5 @@
 {
-  "total": 64.366,
+  "total": 95.556,
   "motor_tts": "kokoro (pm_alex, pt-BR)",
   "cenas": [
     {
@@ -40,9 +40,23 @@
     {
       "cena": 6,
       "start": 45.539,
-      "end": 64.316,
+      "end": 63.216,
       "fala": 16.344,
       "texto": "Matematicamente, trocar votos dentro da oposição não tira um milímetro do líder no primeiro turno. Para reduzir a porcentagem dele, é preciso tirar votos diretamente dele ou trazer novos eleitores. No primeiro turno, essa disputa serve apenas para medir força política para o segundo turno."
+    },
+    {
+      "cena": 7,
+      "start": 63.216,
+      "end": 78.664,
+      "fala": 14.904,
+      "texto": "Pense no João. Ele gostava do candidato C, mas trocou o voto pelo B achando que assim derrotaria o A já no primeiro turno. Na noite da apuração, o A continuava com os mesmos quarenta e três por cento, e a eleição foi para o segundo turno, exatamente como iria de qualquer jeito."
+    },
+    {
+      "cena": 8,
+      "start": 78.664,
+      "end": 95.521,
+      "fala": 14.424,
+      "texto": "Moral da história: no primeiro turno, cada eleitor pode votar em quem realmente o representa, porque o confronto direto acontece no segundo turno. Gostou da explicação? Me segue no Instagrã, arroba rafael castro mê, e no Tic Tóc, arroba rafael castro ânderláin mê."
     }
   ]
 }

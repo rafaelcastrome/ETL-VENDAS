@@ -28,7 +28,14 @@ CENAS = [
     "Muita gente diz: tire o voto dos candidatos menores e passe para o B para derrotar o A no primeiro turno. Mas veja o que acontece quando somamos tudo.",
     "O Candidato B chegou aos cinquenta por cento mais um para ganhar no primeiro turno? Não. E o Candidato A perdeu algum voto com essa troca? Zero. A barra dele continua intacta.",
     "Matematicamente, trocar votos dentro da oposição não tira um milímetro do líder no primeiro turno. Para reduzir a porcentagem dele, é preciso tirar votos diretamente dele ou trazer novos eleitores. No primeiro turno, essa disputa serve apenas para medir força política para o segundo turno.",
+    # Final: uma pequena história e o convite para seguir as redes.
+    "Pense no João. Ele gostava do candidato C, mas trocou o voto pelo B achando que assim derrotaria o A já no primeiro turno. Na noite da apuração, o A continuava com os mesmos quarenta e três por cento, e a eleição foi para o segundo turno, exatamente como iria de qualquer jeito.",
+    # Os @ estão escritos como se pronunciam ("rafaelcastrome", "rafaelcastro_me").
+    "Moral da história: no primeiro turno, cada eleitor pode votar em quem realmente o representa, porque o confronto direto acontece no segundo turno. Gostou da explicação? Me segue no Instagrã, arroba rafael castro mê, e no Tic Tóc, arroba rafael castro ânderláin mê.",
 ]
+
+# Pausa extra depois de cada cena (a cena 6 ganha mais tempo para a virada de página).
+PAUSAS = {6: 1.4, 8: 2.5}
 
 # Pequena pausa entre as cenas para a mão "respirar".
 GAP = 0.6
@@ -114,7 +121,7 @@ async def main():
         mp3 = os.path.join(AUDIO_DIR, f"cena{i}.mp3")
         wav = os.path.join(AUDIO_DIR, f"cena{i}.wav")
         d = duracao(mp3)
-        pad = GAP if i < len(CENAS) else 2.5
+        pad = PAUSAS.get(i, GAP)
         subprocess.check_call([
             "ffmpeg", "-y", "-v", "error", "-i", mp3, "-ar", "44100", "-ac", "2",
             "-af", f"apad=pad_dur={pad}", wav,
