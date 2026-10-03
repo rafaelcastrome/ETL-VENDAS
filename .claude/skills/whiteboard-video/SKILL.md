@@ -18,7 +18,7 @@ Como funciona:
 
 ### 1. Entender o pedido e escrever o roteiro
 - Se o usuário trouxe roteiro/storyboard fechado, **use exatamente o dele**. Não reescreva falas.
-- Se trouxe só o tema ou contexto, escreva o roteiro seguindo `references/roteiro.md`: gancho, base, exemplo com números, virada, resumo, história curta, moral e CTA, com 6–9 cenas e 45–90 s. **Se o usuário pedir uma duração, ela manda**: use o orçamento de caracteres do `roteiro.md` para caber.
+- Se trouxe só o tema ou contexto, escreva o roteiro seguindo o **arco de retenção** do `references/roteiro.md`: gancho com promessa de revelação, expectativa crescente com re-ganchos a cada 8–12 s, clímax "uau" guardado para o final (o fato mais surpreendente, com fonte) e fechamento rápido com CTA. Passe o roteiro pelo checklist de retenção antes de mostrar. **Se o usuário pedir uma duração, ela manda**: use o orçamento de caracteres do `roteiro.md` para caber.
 - **Fatos com fonte, sempre (inegociável):** curiosidade só funciona se for verdade, e um dado inventado destrói a credibilidade do perfil. Antes de escrever o roteiro, levante cada fato do vídeo (estatística, recorde, data, fato científico, "estudos mostram") e encontre uma **fonte concreta** para ele: órgão oficial, pesquisa publicada, relatório conhecido ou veículo jornalístico sério. Use WebSearch/WebFetch se estiverem disponíveis. Registre tudo em `projeto.json` → `fontes`. As regras completas estão em "Fatos e fontes" no `references/roteiro.md`. Resumo:
   - Sem fonte encontrada → o fato **não entra** no vídeo, ou vira suposição explícita na fala ("se você passar vinte minutos por dia…").
   - Nunca escreva "estudos apontam" ou "segundo pesquisas" sem a fonte nomeada em `fontes`.

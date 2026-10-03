@@ -23,15 +23,39 @@ Duração padrão: 30–60 s para curiosidades leves e 45–90 s para explicaç�
 
 Confira depois de gerar o áudio (`timeline.json` → `total`) e ajuste o texto se passar do pedido.
 
-**Vídeos curtos (até ~50 s):** o CTA falado das redes custa ~5 s. Junte o "resumo" com a "virada", deixe a história em 1 cena e a moral + CTA em 1 cena.
+**Vídeos curtos (até ~50 s):** o CTA falado das redes custa ~5 s. Use menos re-ganchos (2), deixe a história em 1 cena e junte o fechamento com o CTA.
 
-1. **Gancho (cena 1, até ~5 s):** uma pergunta ou afirmação que contrarie o senso comum, por exemplo "Existe mesmo voto útil no primeiro turno?" ou "Seu cartão de crédito te cobra 400% ao ano?". Na tela vai o título sublinhado e um desenho simbólico. Nada de apresentação ("Oi, eu sou...").
-2. **Base (1–2 cenas):** a regra ou o conceito mínimo necessário, por exemplo "para ganhar no 1º turno precisa de 50%+1".
-3. **Exemplo concreto com números (2–3 cenas):** números redondos e fáceis de somar. A mão constrói o raciocínio na frente da pessoa com gráfico, setas e contas.
-4. **Virada / revelação (1 cena):** o "olha o que acontece" com X vermelho, círculo e destaque.
-5. **Resumo em uma frase (1 cena):** uma caixa com a conclusão, que funciona como print compartilhável.
-6. **História curta (opcional, recomendada):** um personagem com nome comum (João, Maria) vivendo a situação. Use um boneco, balão de pensamento e um "resultado" carimbado. Histórias aumentam a retenção no fim do vídeo.
-7. **Moral + CTA:** a moral em 2 linhas e "Gostou? Me segue!" com as redes (`WB.ctaRedes`). Na narração: "Me segue no Instagram, arroba ..., e no TikTok, arroba ...".
+### O arco de retenção (obrigatório em todo vídeo)
+
+O vídeo é uma **promessa aberta no começo e paga só no final**. A pessoa fica porque quer ver a resposta, e no meio precisa ganhar motivos novos para continuar. O efeito "uau" é o **fato mais surpreendente guardado para o fim**, e ele também segue "Fatos e fontes": uau inventado não vale.
+
+1. **Gancho com promessa (0–3 s, cena 1):** abra um "loop" de curiosidade que só fecha no final.
+   - A **primeira frase** já é o gancho: pergunta intrigante, afirmação que contraria o senso comum ou uma cena absurda. Nada de "oi", "hoje vou explicar" ou contexto antes.
+   - **Prometa a revelação** sem entregá-la: "e no final eu te mostro por que você SEMPRE escolhe a fila errada", "o último número vai te assustar", "a resposta não é a que você está pensando".
+   - Na tela: título curto e um **elemento de mistério**, por exemplo uma caixa ou cartão com "?" que só será preenchido no final, ou um número tampado com rabisco.
+2. **Expectativa crescente no meio (re-ganchos a cada 8–12 s):** cada cena entrega uma parte e **abre a próxima pergunta**.
+   - Frases-ponte: "mas isso nem é o mais estranho…", "e aqui vem a parte que ninguém te conta", "só que tem um detalhe…", "guarda esse número, que ele vai voltar".
+   - **Escalada:** comece pelo fato menos surpreendente e vá subindo (1 ano → 3 anos → 10 anos). Nunca coloque o maior impacto no meio.
+   - **Pergunta para o espectador** ("chuta aí: quantos você acha que…?") faz a pessoa pensar e esperar a resposta; em seguida desenhe a resposta com pausa.
+   - **Quebras de padrão visual** a cada ~10 s: virar a folha, carimbo, mudar a cor, um personagem novo, algo sendo arrastado. Tela parada é tela abandonada.
+3. **Clímax "uau" (penúltima cena):** feche o loop do começo com a revelação mais forte.
+   - Destaque visual: o "?" do começo vira o número/resposta, com carimbo, círculo vermelho, letras grandes (100–140) e uma comparação concreta que dá escala ("dá pra fazer o ensino fundamental e o médio inteiros").
+   - Prepare com uma frase curta de suspense antes ("e o resultado é…") e uma pausa breve de ~0,4 s (pode ser uma vírgula ou reticências na fala).
+4. **Fechamento rápido (última cena, ≤ 6 s):** depois do uau, a energia cai; não alongue.
+   - Uma frase de humor ou de impacto, e o CTA ("me segue pra mais").
+   - **Loop:** quando der, termine com uma frase que conecte de volta ao começo, para quem rever o vídeo emendar sem perceber. Isso aumenta o tempo assistido.
+
+**História curta** (personagem com nome comum, boneco, balão) funciona bem como veículo da escalada no meio ou como preparação do uau. **Moral/resumo** só se couber em uma frase antes do CTA.
+
+**Checklist de retenção** (confira o roteiro antes de mostrar ao usuário):
+- [ ] A primeira frase prende sozinha, sem contexto antes?
+- [ ] Há uma promessa explícita de revelação no começo?
+- [ ] A resposta principal só aparece no final?
+- [ ] Toda cena do meio termina abrindo uma nova curiosidade?
+- [ ] Os fatos estão em ordem crescente de surpresa?
+- [ ] O uau tem fonte e uma comparação concreta que dá escala?
+- [ ] Depois do uau há no máximo ~6 s?
+- [ ] Há uma mudança visual a cada ~10 s?
 
 Texto da fala: frases curtas, voz ativa, segunda pessoa ("você"). Evite parênteses e listas longas, porque a voz lê tudo.
 
