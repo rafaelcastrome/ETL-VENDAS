@@ -1,8 +1,21 @@
 # Roteiro, narração e publicação
 
+## Tom do perfil Caderno Amarelo (padrão)
+
+O perfil é de **curiosidades e assuntos do dia a dia, leves e com humor**: "explico no papel o que ninguém te explicou". Política, finanças sérias e notícias entram só quando o usuário pedir.
+
+- **Temas que funcionam:** perguntas que todo mundo já se fez ("por que a fila do lado anda mais rápido?"), contas surpreendentes do cotidiano (tempo de vida no trânsito, R$ 1 por dia), paradoxos simples (aniversário, espera do ônibus) e "mitos" testados com uma conta.
+- **Humor:**
+  - um exagero ou comparação absurda no meio ("isso dá 3 anos da sua vida olhando pro semáforo");
+  - um personagem que se dá mal na história (o João que sempre escolhe a fila errada);
+  - uma piada curta no fim, antes do CTA.
+  - Sem humor que ofenda grupos ou pessoas reais.
+- **Ritmo:** curiosidade em segundos, gancho em forma de pergunta e a resposta guardada para a "virada". Frases curtas, linguagem de conversa ("olha só", "e aqui vem o pulo do gato").
+- **Visual:** mais bonecos, carinhas, balões e objetos rabiscados (relógio, ônibus, celular). Use gráficos só quando a conta pedir.
+
 ## Estrutura que prende no TikTok, Reels e Shorts
 
-Duração padrão: 45–90 s (6–9 cenas de 5–15 s). **Se o usuário pedir uma duração, ela manda.** Cada cena tem uma ideia e um desenho.
+Duração padrão: 30–60 s para curiosidades leves e 45–90 s para explicações mais densas (6–9 cenas de 5–15 s). **Se o usuário pedir uma duração, ela manda.** Cada cena tem uma ideia e um desenho.
 
 **Orçamento de fala:** a voz Kokoro (pm_alex, speed 1.1) fala cerca de **18 caracteres por segundo** (≈ 3 palavras/s); a edge-tts Antonio +10% fala num ritmo parecido. Para um vídeo de N segundos:
 - total de caracteres das falas ≈ (N − soma das pausas) × 18;

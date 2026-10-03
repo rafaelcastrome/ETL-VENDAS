@@ -8,7 +8,7 @@ Foto de perfil recomendada: `foto_perfil_a.png` (caderno amarelo com espiral). A
 |---|---|
 | Nome de usuário | `caderno_amarelo` |
 | Nome | `Caderno Amarelo ✏️` |
-| Bio | `Política, dinheiro e dia a dia explicados no papel ✏️ Vídeo novo toda semana` |
+| Bio | `Explico no papel o que ninguém te explicou ✏️ Curiosidades, humor e aquelas dúvidas de banho 🚿 Vídeo novo toda semana` (limite: 160) |
 | Instagram | conectar `@caderno_amarelo` (Editar perfil → Instagram) |
 | Tipo de conta | manter **Conta pessoal**: a conta comercial só pode usar a Biblioteca de Música Comercial |
 | Site | o link na bio só é liberado depois de 1.000 seguidores |
@@ -18,7 +18,7 @@ Foto de perfil recomendada: `foto_perfil_a.png` (caderno amarelo com espiral). A
 | Campo | Preencher com |
 |---|---|
 | Nome de usuário | `caderno_amarelo` |
-| Nome | `Caderno Amarelo \| Explicado no papel` (o campo "nome" entra na busca, por isso as palavras-chave) |
+| Nome | `Caderno Amarelo \| Curiosidades no papel` (o campo "nome" entra na busca, por isso as palavras-chave) |
 | Bio | ver abaixo |
 | Link | `https://www.tiktok.com/@caderno_amarelo` |
 | Conta | Profissional → **Criador de conteúdo**, categoria **Criador de conteúdo digital** (libera estatísticas) |
@@ -26,16 +26,22 @@ Foto de perfil recomendada: `foto_perfil_a.png` (caderno amarelo com espiral). A
 
 Bio (3 linhas):
 ```
-✏️ Política, dinheiro e o dia a dia explicados no papel
-📊 Contas simples, sem lado partidário
+✏️ Explico no papel o que ninguém te explicou
+😄 Curiosidades, humor e dúvidas de banho
 👇 Vídeo novo toda semana
 ```
 
-## Atenção: política no Instagram
+## Linha editorial
 
-Por padrão, o Instagram **não recomenda conteúdo político para quem não segue a conta** (as pessoas precisam ativar isso nas configurações). No Instagram, vídeos sobre eleição tendem a alcançar só os seus seguidores, enquanto no TikTok eles chegam ao "Para Você" normalmente.
+Curiosidades e assuntos do dia a dia, leves e com humor. Política só em datas pontuais, como o vídeo da eleição. No Instagram, conteúdo político não é recomendado por padrão para quem não segue a conta, então esses posts pontuais vão alcançar mais no TikTok.
 
-Para crescer nas duas redes, alterne a política com dinheiro (juros, cartão, financiamento), direitos (FGTS, férias, 13º) e curiosidades do dia a dia. Use a política em datas fortes, como a eleição.
+Ideias de primeiros vídeos:
+- Por que a fila do lado sempre anda mais rápido?
+- Por que o ônibus demora mais quando você está no ponto? (paradoxo da espera)
+- Quantas pessoas numa festa para duas fazerem aniversário no mesmo dia? (só 23)
+- Quanto tempo da vida você passa no banheiro, no trânsito ou no celular?
+- Se você guardasse R$ 1 por dia desde que nasceu, quanto teria hoje?
+- Quantas vezes dá pra dobrar uma folha de papel ao meio?
 
 ## Primeiros passos
 
