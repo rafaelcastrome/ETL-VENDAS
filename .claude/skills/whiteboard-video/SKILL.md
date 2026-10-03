@@ -10,6 +10,7 @@ Transforma um contexto ("explica X", um roteiro pronto ou um storyboard) num `.m
 Como funciona:
 - **O que você escreve:** só dois arquivos, o `projeto.json` (falas de cada cena e @ das redes) e o `cenas.js` (o que desenhar em cada cena).
 - **O que a skill já traz:** o motor de animação (`assets/engine.js`) cuida do papel, da mão, do texto manuscrito, da troca de folha, dos ícones das redes e da renderização determinística.
+- **Mão ✍🏻:** arte do Twemoji (CC-BY 4.0), com lápis amarelo cuja ponta assume a cor da tinta. Crédito em `assets/LICENSE-twemoji.txt`; se quiser, cite "Mão: Twemoji (CC-BY 4.0)" na descrição do perfil ou do vídeo.
 
 `<skill>` abaixo é a pasta deste SKILL.md.
 

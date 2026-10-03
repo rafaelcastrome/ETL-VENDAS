@@ -17,7 +17,7 @@
     black: '#1f1f24', red: '#d62828', blue: '#1d4ed8', green: '#15803d',
     orange: '#ea580c', purple: '#7c3aed', gray: '#8a8a8a', white: '#ffffff',
   };
-  const REST = { x: 1000, y: 1912 };   // mão "estacionada" na borda inferior direita
+  const REST = { x: 965, y: 1985 };    // mão "estacionada" no canto inferior direito
 
   // ---------------- estrutura do SVG ----------------
   const svg = document.getElementById('svg');
@@ -76,23 +76,11 @@
   <rect width="${W}" height="${H}" filter="url(#paperNoise)" opacity="0.35"/>
   <rect width="${W}" height="${H}" fill="url(#vignette)"/>
   <g id="watermark" opacity="0"></g>
-  <g id="hand"><g id="handRot" filter="url(#handShadow)">
-    <path d="M 70 300 C 60 520 70 800 80 1300 L 360 1300 C 350 820 330 520 270 330 Z" fill="url(#skin)" stroke="#9b6142" stroke-width="3"/>
-    <path d="M 62 640 C 150 660 270 660 350 630 L 380 1300 L 50 1300 Z" fill="url(#sleeve)" stroke="#173554" stroke-width="3"/>
-    <path d="M 62 640 C 150 660 270 660 350 630 L 352 690 C 270 720 150 720 60 700 Z" fill="#2b5a8c" stroke="#173554" stroke-width="3"/>
-    <path d="M 22 150 C 70 105 190 120 255 200 C 310 270 300 380 268 450 C 230 520 120 520 70 470 C 30 430 20 330 26 260 Z" fill="url(#skin)" stroke="#9b6142" stroke-width="3"/>
-    <path d="M 30 205 C 70 185 120 192 132 222 C 140 248 108 262 70 258 C 45 256 30 240 30 205 Z" fill="url(#skin)" stroke="#9b6142" stroke-width="3"/>
-    <path d="M 40 262 C 80 250 125 258 132 285 C 138 310 106 320 72 316 C 50 313 38 298 40 262 Z" fill="url(#skin)" stroke="#9b6142" stroke-width="3"/>
-    <rect x="-25" y="60" width="50" height="380" rx="13" fill="url(#markerBody)" stroke="#2b2b2b" stroke-width="3"/>
-    <rect class="ink-tint" x="-25" y="372" width="50" height="68" rx="12" fill="#1f1f24" stroke="#2b2b2b" stroke-width="3"/>
-    <rect class="ink-tint" x="-25" y="250" width="50" height="16" fill="#1f1f24"/>
-    <rect x="-19" y="34" width="38" height="30" rx="4" fill="#9aa0a6" stroke="#2b2b2b" stroke-width="3"/>
-    <path class="ink-tint" d="M -7 1 Q 0 -3 7 1 L 16 36 L -16 36 Z" fill="#1f1f24" stroke="#2b2b2b" stroke-width="2"/>
-    <path d="M -30 118 C -34 92 -14 80 4 84 C 40 92 90 120 140 150 C 160 162 150 196 124 192 C 80 182 30 166 -12 158 C -26 154 -30 140 -30 118 Z" fill="url(#skin)" stroke="#9b6142" stroke-width="3"/>
-    <path d="M -6 92 C 2 90 12 92 16 100" fill="none" stroke="#c98f6d" stroke-width="2.5"/>
-    <path d="M -24 150 C -58 158 -64 196 -46 222 C -28 248 18 252 46 236 L 34 198 C 8 202 -12 186 -24 150 Z" fill="url(#skin)" stroke="#9b6142" stroke-width="3"/>
-    <path d="M -44 170 C -50 180 -50 192 -44 200" fill="none" stroke="#fff3ea" stroke-width="5" stroke-linecap="round" opacity="0.6"/>
-  </g></g>`;
+  <!-- Mão ✍🏻: arte do Twemoji (CC-BY 4.0, https://github.com/jdecked/twemoji), lápis recolorido e antebraço acrescentado.
+       A ponta do lápis fica na origem (0,0). -->
+  <g id="hand"><g id="handRot" filter="url(#handShadow)"><g transform="scale(11) translate(-1.423 -35.238)">
+  <g class="emoji-hand"><polygon points="33.060,18.420 146.200,100.900 134.800,116.100 23.940,30.580" fill="#F7DECE"/><polygon points="27.400,29.300 136.900,113.300 134.800,116.100 25.660,31.620" fill="#E0AA94" opacity="0.55"/><polygon points="45.900,26.300 147.100,99.700 133.900,117.300 35.100,40.700" fill="#3567a0"/><polygon points="45.900,26.300 48.760,28.320 37.840,42.880 35.100,40.700" fill="#25507d"/><path fill="#E0AA94" d="M6.203 21.641c-.078.922.321 1.198.946 1.636.618.433 4.383-2.867 5.614-3.369 1.231-.502 12.787-2.949 12.286-5.183-.501-2.234-3.993-2.564-6.683-2.108-2.69.456-7.838 2.822-9.342 4.099-1.504 1.276-2.821 4.925-2.821 4.925zm8.622 1.497s-3.557 1.155-3.557 4.155.866 4.692 1.276 5.513c.411.82 1.688 1.616 3.455.851 2.052-.889-.491-6.004 6-3.656 2.974 1.075 6.059 2.528 9.059 1.528C33.904 30.58 35 27 35 25c0-4.094-3-3-4-2s-9 3-10 3-6.175-2.862-6.175-2.862z"/><path fill="#EEC2AD" d="M19.312 28.188s-.12-1.316-1.375-1.469c-1.031-.125-2.656.219-3.5 1.906-.844 1.688-2.344 1.406-2.281 2.812.062 1.406.5 2.5 1.406 2.781.907.282 2.188-.218 2.344-1.718.156-1.5.344-2.875 1.312-3.469.97-.593 2.094-.843 2.094-.843z"/><path fill="#E0AA94" d="M18 26s-1-1-3-1-6.664 2.133-5.25 6.375c1 3 3.844 1.594 4.25-1.375.407-2.973 4-4 4-4z"/><path fill="#EEC2AD" d="M17 26s-1-1-3-1-4.885 1.53-5 6c-.094 3.656 4.031 2 4-1-.031-3 4-4 4-4z"/><path fill="#E0AA94" d="M5 27c0 3.297.457 5.286 2.428 4.947 3.269-.562 2.028-4.614 4.889-5.754 2.077-.827 5.101-.63 8.02 1.103C22.26 28.438 21 24 19 23s-8 0-9 0-5 4-5 4z"/><path fill="#EEC2AD" d="M4.842 27.174C3.251 29.839 4.219 32.594 7 32c2.691-.574 1.343-4.07 4-6 1.489-1.082 4.698-1.445 6.698-.445S20 24 18 23s-8.54-.025-9.538.037c-1.909.119-3.62 4.137-3.62 4.137z"/><path fill="#f5c518" d="M9.418 29.114c-.679.778-1.86.859-2.639.18l-.196-.171c-.779-.679-.859-1.859-.18-2.638L28.926.668c.679-.778 1.86-.859 2.639-.18l.195.171c.779.679.859 1.86.181 2.638L9.418 29.114z"/><path fill="#f5c518" d="M10.49 27.886c-2.36 2.705-8.313 8.009-9.067 7.352-.753-.657 3.693-7.275 6.053-9.981 2.36-2.706 1.661-.542 2.493.185.832.726 2.881-.26.521 2.444z"/><polygon points="1.423,35.238 5.190,32.946 3.149,31.180" fill="#f2d3a6"/><polygon class="ink-tint" points="1.423,35.238 2.782,34.431 2.026,33.777" fill="#1f1f24"/><path fill="#E0AA94" d="M6.672 25.026c0 1 2.421 1.915 3.421.915s3.341-2.228 6.419-.941C23.716 28.01 21 24 18 23s-8 0-9 0-2.328 2.026-2.328 2.026z"/><path fill="#F7DECE" d="M6.195 22.043c-.358-1.113 2.188-7.279 3.341-8.234 1.452-1.202 7.069-3.063 9.069-3.063S35 18 35 23s-2 5.625-4.875 6.406c-2.299.625-7.115.242-9.219-1.719C19.062 25.969 17.781 24.781 16 24c-3.302-1.448-5.503.424-6.503 1.424-2 2-5.768-.159-2.625-3.58C9.121 19.395 11.102 18.632 13 18c6-2 10-2 8-4-.707-.707-1.092.346-2.076.525-1.98.36-3.556.602-6.165 1.472-.902.3-5.172 3.023-6.564 6.046z"/><path fill="#E0AA94" d="M13.196 16.275c1.064-.388 5.702-1.232 8.115-2.068 1.949-.676 3.659.636-.04 2.028-3.57 1.343-7.279 1.233-9.984 2.307-1.023.406-1.91-.875 1.909-2.267z"/><path fill="#f5c518" d="M22.487 8.023s-5.928 6.795-8.446 9.661c2.254-.926 4.271-.75 6.198-1.884 1.927-1.133 2.806-2.342 5.73-5.695 1.086-1.244-3.482-2.082-3.482-2.082z"/></g>
+  </g></g></g>`;
   const pagesRoot = svg.querySelector('#pages');
   const hand = svg.querySelector('#hand');
   const handRot = svg.querySelector('#handRot');
@@ -612,7 +600,7 @@
       x += Math.sin(t * 37.0) * 1.4 + Math.sin(t * 13.3) * 1.0;
       y += Math.cos(t * 29.0) * 1.4 + Math.sin(t * 17.7) * 0.9;
     }
-    const rot = -30 + Math.sin(t * 1.7) * 2.2 + (x - 540) * 0.006;
+    const rot = 15 + Math.sin(t * 1.7) * 2.2 + (x - 540) * 0.004;
     hand.setAttribute('transform', `translate(${x.toFixed(2)} ${y.toFixed(2)})`);
     handRot.setAttribute('transform', `rotate(${rot.toFixed(2)})`);
     for (const el of tintEls) el.setAttribute('fill', st.color);
