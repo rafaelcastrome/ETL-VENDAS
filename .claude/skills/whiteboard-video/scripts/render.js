@@ -27,7 +27,7 @@ const ROOT = path.resolve(args[0] && !args[0].startsWith('--') ? args[0] : '.');
 const opt = (name, def) => { const i = args.indexOf(name); return i > -1 ? args[i + 1] : def; };
 const FPS = 30, W = 1080, H = 1920;
 const WORKERS = Number(opt('--workers', Math.max(1, Math.min(4, os.cpus().length))));
-const OUT = path.resolve(ROOT, opt('--out', 'video.mp4'));
+const OUT = opt('--out') ? path.resolve(opt('--out')) : path.join(ROOT, 'video.mp4');   // --out é relativo ao diretório atual
 const FRAMES_DIR = path.join(ROOT, 'frames');
 
 const MIME = { '.html': 'text/html', '.js': 'text/javascript', '.json': 'application/json',

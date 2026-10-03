@@ -29,7 +29,17 @@ Zonas seguras para TikTok, Reels e Shorts, porque a interface do app cobre parte
 | y > 1550 | legenda do app cobre parcialmente: use para conteúdo de apoio |
 | y 1836–1910 | marca d'água automática com as redes |
 
-Tamanhos que funcionam: título 96–110; texto principal 60–84; rótulos 40–54. Abaixo de 38 fica ilegível no celular. Linhas com no máximo 900 px de largura (use `WB.measure(texto, size)` ou `WB.wrap(texto, size, maxW)`).
+Tamanhos que funcionam: título 96–110; texto principal 64–90; números de destaque 90–130; rótulos 44–56. Abaixo de 40 fica difícil de ler no celular. Linhas com no máximo 900 px de largura (use `WB.measure(texto, size)` ou `WB.wrap(texto, size, maxW)`).
+
+**Use a tela toda.** O erro visual mais comum é amontoar tudo no topo com letras pequenas e deixar a metade de baixo vazia. Antes de escrever o `cenas.js`, planeje cada folha:
+- Faça uma tabela "cena → faixa de y que ela ocupa".
+- Distribua o conteúdo entre y 260 e ~1550, aumentando textos e desenhos até a folha ficar cheia no fim da última cena dela.
+- Uma folha costuma comportar 2–4 cenas.
+
+Padrões para reaproveitar a mesma folha:
+- **Estrutura que se completa:** a cena 1 desenha a estrutura (colunas, eixos, cabeçalhos) e as seguintes preenchem.
+- **Encolher para ícone:** o desenho da abertura vira um ícone no canto com `WB.transform`, como a urna do exemplo.
+- **Ao encher:** `WB.newPage`.
 
 Cores (`WB.INK`): `black`, `red`, `blue`, `green`, `orange`, `purple`, `gray`, `white`. Use poucas por cena e com significado fixo, por exemplo azul para um lado e verde para o outro, vermelho para alerta ou meta.
 
@@ -64,7 +74,8 @@ Geradores de `d` (strings SVG):
 - `roughLine(x1,y1,x2,y2,amp)`, `roughRect(x0,y0,x1,y1)`, `roughSeg(...)`: linhas com leve tremor de mão
 - `zigzagHatch(x0,y0,x1,y1,espaço)`: hachura de marcador para preencher barras ou caixas
 - `dashedLine(x0,x1,y)`, `wavyLine(x0,x1,y,amp,comprimento)`
-- `loopEllipse(cx,cy,rx,ry)`: "circular" algo à mão
+- `loopEllipse(cx,cy,rx,ry, turns=1.12, start=-1.9)`: "circular" algo à mão; passa um pouco da volta de propósito (use `turns: 1` para fechar exato)
+- `arcPath(cx,cy,rx,ry,a0,a1)`: arco de elipse em radianos (0 = direita, π/2 = baixo); ex.: base de moeda = `arcPath(cx,cy,rx,ry,0,Math.PI)`
 - `arrowHead(x,y,ângulo,tamanho)`, `circlePath(cx,cy,r)`, `roundRectPath(x,y,w,h,r)`, `cloudPath(cx,cy,rx,ry)`
 
 Grupos: `const g = WB.group(parent?, transform?)`. Elementos livres: `WB.mk('path', {...atributos}, parent)`. Elementos criados com `mk` aparecem desde o início, sem animação, então esconda-os com `opacity` 0 e mostre com `fade`.
@@ -95,6 +106,7 @@ WB.moveGroup(cena, f0, f1, grupo, dx, dy, { grab: {x, y}, arc: 160, color })  //
 WB.transform(cena, f0, f1, grupo, { x, y, s }, { x, y, s })                // translate+scale (ex.: encolher p/ ícone)
 WB.fade(cena, f0, f1, elemento, de, para)                                     // opacidade
 WB.fillAfter(elemento, tracos, dur)                                           // preenchimento aparece após o último traço
+WB.restHand(cena, f0, f1)                                                     // mão vai para a borda inferior (sai da frente)
 WB.handFollow(t0, t1, t => ({x, y}), cor)                                     // mão segue uma trajetória (t absoluto)
 WB.effect(t => { ... })                                                       // qualquer coisa em função de t (t absoluto)
 ```
@@ -115,4 +127,6 @@ Efeitos precisam ser **funções puras de t**, sem estado entre quadros, porque 
 - **Texto sobreposto**: antes de renderizar, gere prévias (`render.js --preview`) dos momentos em que cada cena termina e olhe as imagens. É o erro mais comum.
 - **Grupo transformado antes do desenho**: a mão usa a posição do traço no momento em que `draw` é chamado. Se um grupo for mover ou escalar, desenhe os traços enquanto ele ainda está na posição inicial (a transformação via `transform`/`moveGroup` vem depois no tempo).
 - **`y` de texto é a linha de base**: um texto com size 84 em y=1540 ocupa ~1480–1555.
+- **Mão cobrindo o desenho**: entre um desenho e outro, se o intervalo for menor que 1,5 s, a mão fica parada perto do último traço. Se a fala continua depois que o desenho da cena terminou, ou no fim de uma cena antes de uma pausa, chame `WB.restHand(cena, f, f2)` para a mão sair da frente (ela volta sozinha para o próximo desenho).
+- **`render.js --out`** é relativo ao diretório atual (sem `--out`, sai `video.mp4` dentro da pasta do projeto).
 - **Erros no `cenas.js`** aparecem como `Erro na página` ao rodar o `render.js`, com a mensagem do navegador.

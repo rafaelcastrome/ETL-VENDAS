@@ -190,6 +190,15 @@
     return `M ${(x + Math.cos(a1) * size).toFixed(1)} ${(y + Math.sin(a1) * size).toFixed(1)} L ${x} ${y} ` +
       `L ${(x + Math.cos(a2) * size).toFixed(1)} ${(y + Math.sin(a2) * size).toFixed(1)}`;
   }
+  // Arco de elipse de a0 a a1 (radianos; 0 = direita, PI/2 = baixo). Ex.: base de moeda = arcPath(cx, cy, rx, ry, 0, Math.PI).
+  function arcPath(cx, cy, rx, ry, a0, a1, n = 40) {
+    let d = '';
+    for (let i = 0; i <= n; i++) {
+      const a = a0 + (a1 - a0) * (i / n);
+      d += (i ? ' L ' : 'M ') + (cx + Math.cos(a) * rx).toFixed(1) + ' ' + (cy + Math.sin(a) * ry).toFixed(1);
+    }
+    return d;
+  }
   const circlePath = (cx, cy, r) => `M ${cx + r} ${cy} A ${r} ${r} 0 1 1 ${cx - r} ${cy} A ${r} ${r} 0 1 1 ${cx + r} ${cy}`;
   const roundRectPath = (x, y, w, h, r) =>
     `M ${x + r} ${y} L ${x + w - r} ${y} Q ${x + w} ${y} ${x + w} ${y + r} L ${x + w} ${y + h - r} ` +
@@ -342,6 +351,10 @@
   // A mão segue posFn(t) entre t0 e t1 (ex.: arrastando algo).
   function handFollow(t0, t1, posFn, color = INK.black) {
     handSegs.push({ t0, t1, drawing: false, color, pos: posFn });
+  }
+  // Manda a mão para a borda inferior (repouso) entre f0 e f1, para não cobrir o quadro enquanto a fala continua.
+  function restHand(scene, f0, f1) {
+    handFollow(at(scene, f0), at(scene, f1), () => REST);
   }
   // Move um grupo (dx, dy) num arco, com a mão "arrastando" pelo ponto grab.
   function moveGroup(scene, f0, f1, g, dx, dy, opts = {}) {
@@ -549,11 +562,11 @@
   // ---------------- cenas do projeto ----------------
   const WB = {
     W, H, INK, REST, font, projeto, timeline, scenes, clamp, ease, lerp, rand, jit,
-    at, draw, write, writeLines, effect, handFollow, moveGroup, fade, transform, fillAfter, newPage,
+    at, draw, write, writeLines, effect, handFollow, restHand, moveGroup, fade, transform, fillAfter, newPage,
     strokePath, textStrokes, measure, wrap, showNow, mk, group,
     get layer() { return inkLayer; },
     roughSeg, roughLine, roughRect, zigzagHatch, dashedLine, wavyLine, loopEllipse, arrowHead,
-    circlePath, roundRectPath, cloudPath, C, igIcon, ttIcon, ctaRedes,
+    arcPath, circlePath, roundRectPath, cloudPath, C, igIcon, ttIcon, ctaRedes,
   };
   if (typeof window.CENAS !== 'function') throw new Error('cenas.js precisa definir window.CENAS = function (WB) {...}');
   window.CENAS(WB);

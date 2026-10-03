@@ -2,7 +2,15 @@
 
 ## Estrutura que prende no TikTok, Reels e Shorts
 
-Duração ideal: 45–90 s (6–9 cenas de 5–15 s). Cada cena tem uma ideia e um desenho.
+Duração padrão: 45–90 s (6–9 cenas de 5–15 s). **Se o usuário pedir uma duração, ela manda.** Cada cena tem uma ideia e um desenho.
+
+**Orçamento de fala:** a voz Kokoro (pm_alex, speed 1.1) fala cerca de **18 caracteres por segundo** (≈ 3 palavras/s); a edge-tts Antonio +10% fala num ritmo parecido. Para um vídeo de N segundos:
+- total de caracteres das falas ≈ (N − soma das pausas) × 18;
+- 50 s com ~6 s de pausas → ~800 caracteres.
+
+Confira depois de gerar o áudio (`timeline.json` → `total`) e ajuste o texto se passar do pedido.
+
+**Vídeos curtos (até ~50 s):** o CTA falado das redes custa ~5 s. Junte o "resumo" com a "virada", deixe a história em 1 cena e a moral + CTA em 1 cena.
 
 1. **Gancho (cena 1, até ~5 s):** uma pergunta ou afirmação que contrarie o senso comum, por exemplo "Existe mesmo voto útil no primeiro turno?" ou "Seu cartão de crédito te cobra 400% ao ano?". Na tela vai o título sublinhado e um desenho simbólico. Nada de apresentação ("Oi, eu sou...").
 2. **Base (1–2 cenas):** a regra ou o conceito mínimo necessário, por exemplo "para ganhar no 1º turno precisa de 50%+1".

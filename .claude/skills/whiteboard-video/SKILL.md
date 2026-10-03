@@ -17,7 +17,7 @@ Como funciona:
 
 ### 1. Entender o pedido e escrever o roteiro
 - Se o usuário trouxe roteiro/storyboard fechado, **use exatamente o dele**. Não reescreva falas.
-- Se trouxe só o tema ou contexto, escreva o roteiro seguindo `references/roteiro.md`: gancho, base, exemplo com números, virada, resumo, história curta, moral e CTA, com 6–9 cenas e 45–90 s.
+- Se trouxe só o tema ou contexto, escreva o roteiro seguindo `references/roteiro.md`: gancho, base, exemplo com números, virada, resumo, história curta, moral e CTA, com 6–9 cenas e 45–90 s. **Se o usuário pedir uma duração, ela manda**: use o orçamento de caracteres do `roteiro.md` para caber.
 - **Redes sociais:** por padrão use `instagram: rafaelcastrome` e `tiktok: rafaelcastro_me`. Se o usuário disser que o vídeo é para outro perfil, pergunte os @ e troque em `projeto.json`.
 - **Aprovação:** a renderização leva vários minutos (~1,3 quadro/s, ou seja, ~25 s de máquina por segundo de vídeo). Antes de gerar, mostre o roteiro em tabela (cena | fala | o que aparece na tela) e peça um OK, a não ser que o usuário tenha dito para fazer direto ou tenha fornecido o roteiro pronto.
 
@@ -29,7 +29,7 @@ bash <skill>/scripts/novo_projeto.sh <pasta-do-video>  # copia template + motor 
 Use uma pasta com nome descritivo (ex.: `videos/juros_compostos/`), dentro do repositório atual se o usuário quiser versionar.
 
 ### 3. Narração
-Preencha `projeto.json` → `cenas[].fala`. Escreva o texto **como se fala**: números por extenso e @ soletrados (veja "Fala ≠ texto na tela" em `references/roteiro.md`). Use `pausa` de ~1,2 s antes de uma troca de folha e 2,5 s na última cena. Depois rode:
+Preencha `projeto.json` → `cenas[].fala`. Escreva o texto **como se fala**: números por extenso e @ soletrados (veja "Fala ≠ texto na tela" em `references/roteiro.md`). `pausa` é o silêncio depois da fala da cena. Use ~1,0–1,4 s na cena anterior a uma troca de folha e 2,5 s na última (se omitida, vale 2,5 s na última e `pausaPadrao`, 0,6 s, nas demais). Depois rode:
 ```bash
 python3 <skill>/scripts/gerar_audio.py <pasta-do-video>
 ```
@@ -40,7 +40,9 @@ Leia `references/api.md` (API, coordenadas, zonas seguras do TikTok) e use `refe
 - **Uma ideia visual por cena**, sincronizada com a fala (frações 0–1 da cena; estime a posição da palavra no texto).
 - **Texto curto na tela:** palavras-chave e números, não a fala inteira.
 - **Cores com significado fixo** e conteúdo essencial em x 60–940, y 260–1500.
+- **Use a tela toda:** planeje cada folha (que faixa de y cada cena ocupa), com textos grandes (64–90) distribuídos até ~y 1550. Metade de baixo vazia e letra pequena é o defeito visual mais comum.
 - **Folha cheia ou mudança de parte** → `WB.newPage`. **Última cena** → `WB.ctaRedes`.
+- **Mão fora da frente:** quando a fala continua depois do desenho da cena, use `WB.restHand` para a mão não ficar parada em cima do quadro.
 
 ### 5. Conferir antes de renderizar (não pule)
 ```bash
@@ -63,7 +65,7 @@ Extraia 2–3 quadros (`ffmpeg -ss <t> -i <nome>.mp4 -frames:v 1 q.png`) e olhe.
 - Envie o `.mp4` ao usuário (ferramenta de envio de arquivo, se houver) e informe o caminho.
 - Diga qual voz foi usada e peça para ele conferir a pronúncia dos @, porque não dá para ouvir aqui.
 - Entregue a **legenda de postagem** (modelo e dicas em `references/roteiro.md`) com 2 variações e a dica de **música de fundo**.
-- Se estiver num repositório git, faça o commit da pasta do vídeo (o `.gitignore` do projeto já exclui `frames/` e `preview/`).
+- Se estiver num repositório git e o usuário não tiver dito o contrário, faça o commit da pasta do vídeo (o `.gitignore` do projeto já exclui `frames/` e `preview/`).
 
 ## Ajustes depois de pronto
 - **Mudou fala/texto narrado** → rode `gerar_audio.py` de novo (as cenas se reajustam sozinhas) e renderize.
