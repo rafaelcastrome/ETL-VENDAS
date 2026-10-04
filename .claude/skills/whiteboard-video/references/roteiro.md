@@ -99,22 +99,46 @@ O perfil vive de credibilidade: um número inventado, quando alguém desmente no
 - **Política:** seja neutro. Use candidatos/partidos fictícios ("Candidato A"), não recomende voto em ninguém e centre o vídeo na regra ou na matemática. Isso protege o perfil de denúncias e alcança todos os lados.
 - **Números reais** (pesquisas, taxas, leis): seguem "Fatos e fontes" acima. Regras estáveis e conhecidas (ex.: "50% + 1 dos votos válidos" no 1º turno) também levam a fonte oficial (Constituição, TSE).
 
-## Legenda para postar (entregue junto com o vídeo)
+## Legendas para postar (SEMPRE entregar as duas, TikTok e Instagram, assim que o vídeo ficar pronto)
 
+As duas redes premiam coisas diferentes, então a legenda não é a mesma. Entregue cada uma num bloco de código pronto para copiar, salve tudo em `<projeto>/legenda.txt` e mostre na resposta final, sem esperar o usuário pedir.
+
+**TikTok:** curta e direta, porque a legenda aparece por cima do vídeo e o TikTok funciona como busca.
 ```
-<Pergunta-gancho igual ou parecida com a do vídeo> 🤔<emoji do tema>
+<Pergunta-gancho com palavras-chave do tema> 🤔<emoji>
 
-<1 linha de curiosidade: "Fiz a conta no papel e o resultado surpreende 👀">
-<"Assiste até o final: <gancho da história> 😅">
+<1 linha que aumenta a curiosidade sem entregar o final: "o final vai te surpreender 👀">
 
-👇 Comenta aqui:
-<pergunta fácil de responder, sim/não ou A/B>
+👇 <pergunta fácil de responder nos comentários: sim/não, A ou B, "chuta um número">
 
-📌 <Urgência/contexto se houver (ex.: "Amanhã é dia de votar!")> Salva e manda pra quem <situação>.
-
-#<tema> #<tema2> #<subtema> #aprendanotiktok #educação #fyp #foryou
+#<tema> #<tema2> #curiosidades #vocesabia #aprendanotiktok
 ```
-Inclua mais 2 variações curtas. Dicas de publicação:
+- 3–6 hashtags (tema + nicho + 1–2 amplas). Evite #fyp em excesso, porque não ajuda.
+- Palavras-chave do tema na primeira linha (a busca do TikTok lê a legenda).
+
+**Instagram (Reels):** primeira linha forte (é o que aparece antes do "mais"), corpo com mais contexto e chamada para **salvar e compartilhar**, que são os sinais que mais pesam no Instagram.
+```
+<Primeira linha-gancho curta, até ~120 caracteres> <emoji>
+
+<2–3 linhas resumindo a curiosidade e o "uau" sem entregar tudo>
+
+💾 Salva pra mostrar pra alguém depois
+📤 Manda pra quem <situação do tema>
+💬 <pergunta para comentar>
+
+<se houver fontes: 📚 Fontes: ... (curto)>
+
+#<tema> #<tema2> #<subtema> #curiosidades #vocesabia #aprendanoreels #cadernoamarelo
+```
+- 5–10 hashtags de nicho; sem hashtags genéricas demais.
+- Fontes podem ir na legenda do Instagram (cabe) e, no TikTok, num **comentário fixado**.
+
+**Também entregue:**
+- **Comentário para fixar:** fontes + aviso quando for saúde/finanças.
+- **Texto da capa:** 3–6 palavras em maiúsculas, a pergunta do gancho.
+- **1 variação curta** de cada legenda, para teste.
+
+Dicas de publicação:
 - **Capa:** escolha um quadro do começo (título), nunca o quadro final com @/CTA.
 - **Uma conta por vídeo:** não poste o mesmo vídeo em dois perfis (o TikTok marca o repetido como "não original"); para divulgar no perfil pessoal, use "repostar" ou compartilhe o link.
 - **Visibilidade restrita por "conteúdo não original"** → recorrer pelo app ("Recurso"), explicando que animação e narração são originais.
