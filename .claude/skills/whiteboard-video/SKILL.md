@@ -24,7 +24,7 @@ Como funciona:
   - Nunca escreva "estudos apontam" ou "segundo pesquisas" sem a fonte nomeada em `fontes`.
   - Sem acesso à internet para verificar, **avise o usuário** e peça a fonte ou a autorização para tratar os números como suposição.
 - **Redes sociais:** por padrão use o perfil **Caderno Amarelo**: `"marca": {"handle": "caderno_amarelo", "nome": "Caderno Amarelo"}`. **Nunca coloque logos de plataformas no vídeo** (o TikTok trata como conteúdo reaproveitado e tira do "Para Você"); o motor já mostra só o caderninho + @ (fala: "Me segue no Instagrã e no Tic Tóc: arroba caderno ânderláin amarelo"). Se o usuário disser que o vídeo é para outro perfil, pergunte os @ e troque em `projeto.json`.
-- **Aprovação:** a renderização leva vários minutos (~1,3 quadro/s, ou seja, ~25 s de máquina por segundo de vídeo). Antes de gerar, mostre o roteiro em tabela (cena | fala | o que aparece na tela), com a lista de fontes, e peça um OK, a não ser que o usuário tenha dito para fazer direto ou tenha fornecido o roteiro pronto.
+- **Aprovação:** a renderização leva vários minutos (~3 quadros/s com 4 CPUs, ou seja, ~10 s de máquina por segundo de vídeo). Antes de gerar, mostre o roteiro em tabela (cena | fala | o que aparece na tela), com a lista de fontes, e peça um OK, a não ser que o usuário tenha dito para fazer direto ou tenha fornecido o roteiro pronto.
 
 ### 2. Preparar o ambiente e o projeto
 ```bash
@@ -59,7 +59,7 @@ Escolha instantes no fim de cada cena (o quadro mais cheio) e no meio de animaç
 ```bash
 node <skill>/scripts/render.js <pasta-do-video> --out <nome>.mp4
 ```
-Rode em segundo plano (pode passar de 30 min) e acompanhe pelo log. Ao final, verifique:
+Rode em segundo plano (um vídeo de 90 s leva ~15 min) e acompanhe pelo log. Ao final, verifique:
 ```bash
 ffprobe -v error -show_entries stream=codec_name,width,height,r_frame_rate,nb_frames -of compact <nome>.mp4
 ffmpeg -v error -i <nome>.mp4 -f null - && echo DECODE_OK

@@ -86,8 +86,11 @@ async function main() {
   console.log(`Renderizando ${nFrames} quadros (${total.toFixed(2)}s) com ${WORKERS} páginas...`);
   let done = 0; const t0 = Date.now();
   const chunk = Math.ceil(nFrames / WORKERS);
+  // Um navegador (processo) por frente: com várias páginas no mesmo navegador elas disputam
+  // o mesmo processo de renderização e a CPU fica ociosa.
   await Promise.all(Array.from({ length: WORKERS }, async (_, w) => {
-    const page = await openPage(browser, url);
+    const own = await playwright.chromium.launch();
+    const page = await openPage(own, url);
     const el = stage(page);
     for (let f = w * chunk; f < Math.min(nFrames, (w + 1) * chunk); f++) {
       await page.evaluate(tt => window.seekToTime(tt), f / FPS);
@@ -98,6 +101,7 @@ async function main() {
       }
     }
     await page.close();
+    await own.close();
   }));
   await browser.close();
   server.close();
