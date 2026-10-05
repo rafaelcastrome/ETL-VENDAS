@@ -111,7 +111,7 @@ async function main() {
     '-y', '-v', 'error',
     '-framerate', String(FPS), '-i', path.join(FRAMES_DIR, 'f_%05d.png'),
     '-i', path.join(ROOT, 'narration.mp3'),
-    '-c:v', 'libx264', '-preset', 'medium', '-crf', '18', '-pix_fmt', 'yuv420p', '-r', String(FPS),
+    '-c:v', 'libx264', '-preset', 'medium', '-crf', '23', '-maxrate', '2800k', '-bufsize', '5600k', '-pix_fmt', 'yuv420p',  // < 30 MB p/ ~80 s '-r', String(FPS),
     '-c:a', 'aac', '-b:a', '192k', '-shortest', '-movflags', '+faststart',
     OUT,
   ], { stdio: 'inherit' });
