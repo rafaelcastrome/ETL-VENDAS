@@ -71,7 +71,7 @@ Extraia 2–3 quadros (`ffmpeg -ss <t> -i <nome>.mp4 -frames:v 1 q.png`) e olhe.
 ### 7. Entregar
 - Envie o `.mp4` ao usuário (ferramenta de envio de arquivo, se houver) e informe o caminho.
 - Diga qual voz foi usada e peça para ele conferir a pronúncia dos @, porque não dá para ouvir aqui.
-- **Sempre, sem o usuário pedir:** entregue as **legendas de engajamento para TikTok e para Instagram** (são diferentes; modelos em "Legendas para postar" no `references/roteiro.md`), cada uma em bloco de código pronto para copiar, mais o texto da capa, o comentário fixado com fontes e a dica de **música de fundo**. Salve tudo em `<projeto>/legenda.txt`.
+- **Sempre, sem o usuário pedir:** entregue as **legendas para TikTok e Instagram**: **curtas** (1 frase sobre o vídeo, sem repetir o que ele mostra, + a assinatura "📒 Sua dose diária de humor e conhecimento" + 3–5 hashtags; regras em "Legendas para postar" no `references/roteiro.md`), cada uma em bloco de código pronto para copiar, mais o texto da capa e o comentário fixado (fontes ou crédito). Salve tudo em `<projeto>/legenda.txt`.
 - Entregue as **fontes** em formato curto, prontas para a legenda ou para um comentário fixado ("📚 Fontes: …"). Isso protege o perfil quando alguém questionar nos comentários.
 - Se estiver num repositório git e o usuário não tiver dito o contrário, faça o commit da pasta do vídeo (o `.gitignore` do projeto já exclui `frames/` e `preview/`).
 

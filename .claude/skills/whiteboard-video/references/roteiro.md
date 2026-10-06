@@ -99,44 +99,27 @@ O perfil vive de credibilidade: um número inventado, quando alguém desmente no
 - **Política:** seja neutro. Use candidatos/partidos fictícios ("Candidato A"), não recomende voto em ninguém e centre o vídeo na regra ou na matemática. Isso protege o perfil de denúncias e alcança todos os lados.
 - **Números reais** (pesquisas, taxas, leis): seguem "Fatos e fontes" acima. Regras estáveis e conhecidas (ex.: "50% + 1 dos votos válidos" no 1º turno) também levam a fonte oficial (Constituição, TSE).
 
-## Legendas para postar (SEMPRE entregar as duas, TikTok e Instagram, assim que o vídeo ficar pronto)
+## Legendas para postar (SEMPRE entregar, TikTok e Instagram, assim que o vídeo ficar pronto)
 
-As duas redes premiam coisas diferentes, então a legenda não é a mesma. Entregue cada uma num bloco de código pronto para copiar, salve tudo em `<projeto>/legenda.txt` e mostre na resposta final, sem esperar o usuário pedir.
+**Estilo: curto e com cara de gente, não de IA.** Ninguém lê legenda longa, e repetir o que o vídeo já mostra é desperdício. Regras:
+- **No máximo 2 linhas de texto + 1 linha de assinatura + hashtags.**
+- **Não repita falas nem textos do vídeo.** Diga em uma frase *do que se trata*, na voz do criador (1ª pessoa quando couber): "Testando minha filha com a regra de não aceitar doce de estranho 🍭".
+- Pode ter um toque de humor ou um gancho leve, sem frases prontas de marketing ("o final vai te surpreender", "você não vai acreditar", listas de 💾📤💬). Nada de CAPS LOCK exagerado nem fileira de emojis: 1–2 emojis no total.
+- **Assinatura do perfil** em toda legenda: `📒 Sua dose diária de humor e conhecimento` (Instagram pode levar o @ na frente).
+- Hashtags: 3–5, de nicho, na mesma linha.
+- TikTok e Instagram podem ser quase iguais; no TikTok, as palavras-chave do tema vêm na 1ª linha (a busca lê a legenda).
 
-**TikTok:** curta e direta, porque a legenda aparece por cima do vídeo e o TikTok funciona como busca.
+Modelo:
 ```
-<Pergunta-gancho com palavras-chave do tema> 🤔<emoji>
-
-<1 linha que aumenta a curiosidade sem entregar o final: "o final vai te surpreender 👀">
-
-👇 <pergunta fácil de responder nos comentários: sim/não, A ou B, "chuta um número">
-
-#<tema> #<tema2> #curiosidades #vocesabia #aprendanotiktok
+<1 frase sobre o vídeo, na voz do criador> <emoji>
+📒 Sua dose diária de humor e conhecimento
+#<tema> #<tema2> #<nicho>
 ```
-- 3–6 hashtags (tema + nicho + 1–2 amplas). Evite #fyp em excesso, porque não ajuda.
-- Palavras-chave do tema na primeira linha (a busca do TikTok lê a legenda).
+Exemplo (meme do docinho): `Testando minha filha com a regra de não aceitar doce de estranho 🍭` / `📒 Sua dose diária de humor e conhecimento` / `#meme #humor #paiefilha`.
 
-**Instagram (Reels):** primeira linha forte (é o que aparece antes do "mais"), corpo com mais contexto e chamada para **salvar e compartilhar**, que são os sinais que mais pesam no Instagram.
-```
-<Primeira linha-gancho curta, até ~120 caracteres> <emoji>
-
-<2–3 linhas resumindo a curiosidade e o "uau" sem entregar tudo>
-
-💾 Salva pra mostrar pra alguém depois
-📤 Manda pra quem <situação do tema>
-💬 <pergunta para comentar>
-
-<se houver fontes: 📚 Fontes: ... (curto)>
-
-#<tema> #<tema2> #<subtema> #curiosidades #vocesabia #aprendanoreels #cadernoamarelo
-```
-- 5–10 hashtags de nicho; sem hashtags genéricas demais.
-- Fontes podem ir na legenda do Instagram (cabe) e, no TikTok, num **comentário fixado**.
-
-**Também entregue:**
-- **Comentário para fixar:** fontes + aviso quando for saúde/finanças.
-- **Texto da capa:** 3–6 palavras em maiúsculas, a pergunta do gancho.
-- **1 variação curta** de cada legenda, para teste.
+**Também entregue (curto):**
+- **Comentário para fixar:** fontes (vídeo de curiosidade) ou crédito do áudio/ideia original (meme), em 1 linha.
+- **Texto da capa:** 3–5 palavras.
 
 Dicas de publicação:
 - **Capa:** escolha um quadro do começo (título), nunca o quadro final com @/CTA.
