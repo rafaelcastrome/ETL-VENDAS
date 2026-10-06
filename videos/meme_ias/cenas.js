@@ -1,5 +1,5 @@
 // Meme "A reunião das IAs" — cenas PRONTAS (projeto.semMao), estilo Caderno Amarelo,
-// sincronizadas com o áudio da esquete. Cada IA tem o logo (desenhado à mão) colado na testa.
+// sincronizadas com o áudio da esquete. Cada personagem É a própria IA: o logo vivo, com rosto e braços.
 // Tempos em segundos absolutos do áudio. Bocas seguem o volume (window.ENVELOPE, 30/s).
 window.CENAS = function (WB) {
   const { INK } = WB;
@@ -105,129 +105,143 @@ window.CENAS = function (WB) {
     return g;
   }
 
-  // ---------------------------------------------------------------- a IA (personagem de malha branca)
-  // o: { fala(t) bool, eyes(t): 'base'|'happy'|'smug'|'wide'|'closed'|'side'|'worried'|'roll', pose(t), mouth(t) }
+  // ---------------------------------------------------------------- a IA (o próprio logo vivo: corpo = logo, com rosto e braços)
+  // o: { fala(t) bool, eyes(t): 'base'|'happy'|'smug'|'wide'|'closed'|'side'|'roll', pose(t), mouth(t), brow, worried, tilt, look }
   // poses: 'table' | 'type' | 'gesture' | 'point' | 'open' | 'facepalm' | 'crossed' | 'chin' | 'three' | 'shrug' | 'proud'
+  const LID = { gpt: '#10a37f', cla: '#d97757', gem: '#8a72d8', cop: '#6f7fe8' };
+  const BODY = {
+    gpt(g) {
+      circ(0, 0, 265, '#10a37f', g, 8);
+      const k = WB.group(g, 'scale(4.3)');
+      for (let i = 0; i < 6; i++) {
+        WB.mk('path', { d: 'M -11 -6 L -11 -40 Q -11 -52 0 -52 Q 11 -52 11 -40 L 11 -6', fill: 'none', stroke: '#ffffff', 'stroke-width': 6, 'stroke-linecap': 'round', opacity: 0.32, transform: `rotate(${i * 60}) translate(13 4) rotate(-30)` }, k);
+      }
+    },
+    cla(g) {
+      const n = 11, rays = [];
+      for (let i = 0; i < n; i++) { const a = i / n * Math.PI * 2 - Math.PI / 2 + 0.15, r = i % 2 ? 235 : 290; rays.push(`M 0 0 L ${(Math.cos(a) * r).toFixed(1)} ${(Math.sin(a) * r).toFixed(1)}`); }
+      for (const d of rays) WB.mk('path', { d, stroke: INK.black, 'stroke-width': 80, 'stroke-linecap': 'round' }, g);
+      for (const d of rays) WB.mk('path', { d, stroke: '#d97757', 'stroke-width': 64, 'stroke-linecap': 'round' }, g);
+      circ(0, 0, 150, '#d97757', g, 0);
+    },
+    gem(g) {
+      const s = WB.group(g, 'scale(6)');
+      WB.mk('path', { d: 'M 0 -54 C 14 -18 18 -14 54 0 C 18 14 14 18 0 54 C -14 18 -18 14 -54 0 C -18 -14 -14 -18 0 -54 Z', fill: 'url(#gGem)', stroke: INK.black, 'stroke-width': 1.35 }, s);
+    },
+    cop(g) {
+      const s = WB.group(g, 'scale(5.2)');
+      WB.mk('path', { d: 'M -46 -6 Q -46 -40 -14 -40 L 18 -40 Q 30 -40 26 -28 L 10 22 Q 6 34 -8 34 L -30 34 Q -46 34 -46 18 Z', fill: 'url(#gCopA)', stroke: INK.black, 'stroke-width': 1.5 }, s);
+      WB.mk('path', { d: 'M 46 6 Q 46 40 14 40 L -18 40 Q -30 40 -26 28 L -10 -22 Q -6 -34 8 -34 L 30 -34 Q 46 -34 46 -18 Z', fill: 'url(#gCopB)', stroke: INK.black, 'stroke-width': 1.5, opacity: 0.94 }, s);
+    },
+  };
   function personagem(parent, who, o) {
-    const P = IA[who];
+    const P = IA[who], LIDC = LID[who];
     const root = WB.group(parent);
-    // corpo
     const body = WB.group(root);
-    shape('M -235 560 Q -240 320 -152 262 Q -82 222 0 222 Q 82 222 152 262 Q 240 320 235 560 Z', SUIT, body, 7);
-    ink('M 0 232 L 0 560', '#b9b9b9', 5, body);
-    ink('M -60 232 Q 0 262 60 232', '#cfcfcf', 5, body);
-    // cabeça: capuz + rosto
-    const head = WB.group(root);
-    shape(E(0, -12, 178, 208), SUIT, head, 7);
-    ink('M -150 -110 Q -60 -175 60 -170', '#e6e6e2', 10, head);
-    WB.mk('path', { d: E(0, 42, 128, 150), fill: 'none', stroke: P.cor, 'stroke-width': 9 }, head);
-    shape(E(0, 42, 120, 142), SKIN, head, 5);
-    WB.mk('ellipse', { cx: -70, cy: 92, rx: 22, ry: 13, fill: '#f29a9a', opacity: 0.45 }, head);
-    WB.mk('ellipse', { cx: 70, cy: 92, rx: 22, ry: 13, fill: '#f29a9a', opacity: 0.45 }, head);
-    // olhos
+    // braços de borracha atrás do corpo
+    const arms = WB.group(root);
+    BODY[who](body);
+    const face = WB.group(body, 'translate(0 -40) scale(1.35) translate(0 -45)');
+    WB.mk('ellipse', { cx: -72, cy: 92, rx: 24, ry: 14, fill: '#ff8fa3', opacity: 0.55 }, face);
+    WB.mk('ellipse', { cx: 72, cy: 92, rx: 24, ry: 14, fill: '#ff8fa3', opacity: 0.55 }, face);
     const eyes = {};
-    eyes.base = WB.group(head);
-    for (const sx of [-46, 46]) WB.mk('ellipse', { cx: sx, cy: 22, rx: 24, ry: P.olhos === 'bright' ? 30 : 26, fill: '#fff', stroke: INK.black, 'stroke-width': 5 }, eyes.base);
+    eyes.base = WB.group(face);
+    for (const sx of [-46, 46]) WB.mk('ellipse', { cx: sx, cy: 22, rx: 26, ry: P.olhos === 'bright' ? 32 : 28, fill: '#fff', stroke: INK.black, 'stroke-width': 5 }, eyes.base);
     const pupils = WB.group(eyes.base);
-    for (const sx of [-46, 46]) { circ(sx, 26, 12, INK.black, pupils, 0); circ(sx + 5, 20, 4, '#fff', pupils, 0); }
+    for (const sx of [-46, 46]) { circ(sx, 26, 13, INK.black, pupils, 0); circ(sx + 5, 20, 4.5, '#fff', pupils, 0); }
     const lids = WB.group(eyes.base);
     if (P.olhos === 'tired') {
-      shape('M -72 18 Q -46 -6 -20 18 Z M 20 18 Q 46 -6 72 18 Z', SKIN, lids, 5);
-      ink('M -70 54 Q -46 66 -22 54 M 22 54 Q 46 66 70 54', '#8f6a55', 4, lids);
+      shape('M -74 18 Q -46 -8 -18 18 Z M 18 18 Q 46 -8 74 18 Z', LIDC, lids, 5);
+      ink('M -70 58 Q -46 70 -22 58 M 22 58 Q 46 70 70 58', '#0a5a46', 5, lids);
     } else if (P.olhos === 'calm') {
-      shape('M -72 22 Q -46 -4 -20 22 Z M 20 22 Q 46 -4 72 22 Z', SKIN, lids, 5);
+      shape('M -74 22 Q -46 -6 -18 22 Z M 18 22 Q 46 -6 74 22 Z', LIDC, lids, 5);
     } else if (P.olhos === 'lash') {
-      ink('M -70 6 L -82 -4 M -64 0 L -72 -12 M 70 6 L 82 -4 M 64 0 L 72 -12', INK.black, 5, lids);
+      ink('M -72 6 L -84 -4 M -66 0 L -74 -12 M 72 6 L 84 -4 M 66 0 L 74 -12', INK.black, 5, lids);
     }
     const blink = WB.group(eyes.base);
-    shape('M -72 22 Q -46 -8 -20 22 Q -46 50 -72 22 Z M 20 22 Q 46 -8 72 22 Q 46 50 20 22 Z', SKIN, blink, 5);
-    eyes.happy = WB.group(head);
-    ink('M -70 30 Q -46 2 -22 30 M 22 30 Q 46 2 70 30', INK.black, 8, eyes.happy);
-    eyes.smug = WB.group(head);
-    for (const sx of [-46, 46]) WB.mk('ellipse', { cx: sx, cy: 24, rx: 24, ry: 20, fill: '#fff', stroke: INK.black, 'stroke-width': 5 }, eyes.smug);
-    circ(-40, 30, 10, INK.black, eyes.smug, 0); circ(52, 30, 10, INK.black, eyes.smug, 0);
-    shape('M -72 26 L -20 26 L -20 6 L -72 6 Z M 20 26 L 72 26 L 72 6 L 20 6 Z', SKIN, eyes.smug, 0);
-    ink('M -72 26 L -20 26 M 20 26 L 72 26', INK.black, 6, eyes.smug);
-    eyes.wide = WB.group(head);
-    for (const sx of [-48, 48]) { circ(sx, 18, 36, '#fff', eyes.wide, 6); circ(sx, 18, 7, INK.black, eyes.wide, 0); }
-    eyes.closed = WB.group(head);
-    ink('M -70 26 Q -46 40 -22 26 M 22 26 Q 46 40 70 26', INK.black, 7, eyes.closed);
-    eyes.side = WB.group(head);
-    for (const sx of [-46, 46]) { WB.mk('ellipse', { cx: sx, cy: 22, rx: 24, ry: 24, fill: '#fff', stroke: INK.black, 'stroke-width': 5 }, eyes.side); circ(sx + 13, 26, 11, INK.black, eyes.side, 0); }
-    shape('M -72 20 Q -46 -4 -20 20 Z M 20 20 Q 46 -4 72 20 Z', SKIN, eyes.side, 5);
-    eyes.roll = WB.group(head);
-    for (const sx of [-46, 46]) { WB.mk('ellipse', { cx: sx, cy: 22, rx: 24, ry: 26, fill: '#fff', stroke: INK.black, 'stroke-width': 5 }, eyes.roll); circ(sx + 4, 4, 11, INK.black, eyes.roll, 0); }
-    // sobrancelhas
-    const brows = WB.group(head);
-    const bL = ink('M -76 -22 Q -48 -36 -20 -24', INK.black, 9, brows), bR = ink('M 20 -24 Q 48 -36 76 -22', INK.black, 9, brows);
-    ink('M 0 38 Q -12 66 4 70', SKIN_D, 6, head);
-    mouth(head, 112, 44, (t) => {
+    shape('M -74 22 Q -46 -10 -18 22 Q -46 54 -74 22 Z M 18 22 Q 46 -10 74 22 Q 46 54 18 22 Z', LIDC, blink, 5);
+    eyes.happy = WB.group(face);
+    ink('M -70 30 Q -46 2 -22 30 M 22 30 Q 46 2 70 30', INK.black, 9, eyes.happy);
+    eyes.smug = WB.group(face);
+    for (const sx of [-46, 46]) WB.mk('ellipse', { cx: sx, cy: 24, rx: 26, ry: 22, fill: '#fff', stroke: INK.black, 'stroke-width': 5 }, eyes.smug);
+    circ(-40, 32, 11, INK.black, eyes.smug, 0); circ(52, 32, 11, INK.black, eyes.smug, 0);
+    shape('M -74 26 L -18 26 L -18 0 L -74 0 Z M 18 26 L 74 26 L 74 0 L 18 0 Z', LIDC, eyes.smug, 0);
+    ink('M -74 26 L -18 26 M 18 26 L 74 26', INK.black, 6, eyes.smug);
+    eyes.wide = WB.group(face);
+    for (const sx of [-50, 50]) { circ(sx, 18, 38, '#fff', eyes.wide, 6); circ(sx, 18, 8, INK.black, eyes.wide, 0); }
+    eyes.closed = WB.group(face);
+    ink('M -70 26 Q -46 42 -22 26 M 22 26 Q 46 42 70 26', INK.black, 8, eyes.closed);
+    eyes.side = WB.group(face);
+    for (const sx of [-46, 46]) { WB.mk('ellipse', { cx: sx, cy: 22, rx: 26, ry: 26, fill: '#fff', stroke: INK.black, 'stroke-width': 5 }, eyes.side); circ(sx + 14, 26, 12, INK.black, eyes.side, 0); }
+    shape('M -74 20 Q -46 -6 -18 20 Z M 18 20 Q 46 -6 74 20 Z', LIDC, eyes.side, 5);
+    eyes.roll = WB.group(face);
+    for (const sx of [-46, 46]) { WB.mk('ellipse', { cx: sx, cy: 22, rx: 26, ry: 28, fill: '#fff', stroke: INK.black, 'stroke-width': 5 }, eyes.roll); circ(sx + 4, 4, 12, INK.black, eyes.roll, 0); }
+    const brows = WB.group(face);
+    const bL = ink('M -78 -24 Q -48 -40 -18 -26', INK.black, 10, brows), bR = ink('M 18 -26 Q 48 -40 78 -24', INK.black, 10, brows);
+    mouth(face, 100, 44, (t) => {
       const m = val(o.mouth, t, null);
       if (m) return typeof m === 'string' ? { type: m } : m;
       return val(o.fala, t, false) ? { type: 'talk', talk: true } : { type: 'flat' };
     });
-    // adesivo com o logo na testa
-    const st = WB.group(head, `translate(0 -122) rotate(${P.rot})`);
-    WB.mk('rect', { x: -84, y: -58, width: 168, height: 116, rx: 6, fill: '#fffdf6', stroke: '#9a9a9a', 'stroke-width': 3 }, st);
-    WB.mk('rect', { x: -84, y: -58, width: 168, height: 16, fill: '#fff3b0', opacity: 0.8 }, st);
-    logo(st, who, 0, 6, 0.92);
-    // braços (sobrepostos ao corpo)
-    const arms = WB.group(root);
-    const armR = WB.group(arms), armL = WB.group(arms);
-    const mkArm = (g) => {
-      const up = limb('', SUIT, 48, g), low = limb('', SUIT, 44, g);
+    // braços de "mangueira" com luvas brancas
+    const mkArm = () => {
+      const g = WB.group(arms);
+      const hose = WB.group(g);
+      const hb = WB.mk('path', { d: '', fill: 'none', stroke: INK.black, 'stroke-width': 26, 'stroke-linecap': 'round' }, hose);
+      const hc = WB.mk('path', { d: '', fill: 'none', stroke: '#3a3a40', 'stroke-width': 14, 'stroke-linecap': 'round' }, hose);
       const hand = WB.group(g);
-      circ(0, 0, 30, SKIN, hand, 6);
       const fing = WB.group(hand);
-      return { up, low, hand, fing };
+      circ(0, 0, 36, '#ffffff', hand, 6);
+      ink('M -22 18 Q 0 28 22 18', '#bbbbbb', 4, hand);
+      return { hb, hc, hand, fing };
     };
-    const R = mkArm(armR), Lf = mkArm(armL);
-    const setLimb = (lg, d) => { for (const p of lg.children) p.setAttribute('d', d); };
-    // dedos extras (apontar / três dedos)
-    const point = limb('M 0 -10 L 0 -58', SKIN, 14, R.fing);
+    const R = mkArm(), Lf = mkArm();
+    const point = limb('M 0 -10 L 0 -66', '#ffffff', 16, R.fing);
     const three = WB.group(R.fing);
-    limb('M -14 -14 L -20 -56', SKIN, 12, three); limb('M 0 -18 L 0 -62', SKIN, 12, three); limb('M 14 -14 L 20 -56', SKIN, 12, three);
-
-    // poses: [ombro→cotovelo→mão] para direita (R) e esquerda (L), em coordenadas locais
+    limb('M -16 -14 L -24 -62', '#ffffff', 14, three); limb('M 0 -18 L 0 -70', '#ffffff', 14, three); limb('M 16 -14 L 24 -62', '#ffffff', 14, three);
     function pose(name, t) {
       const w = Math.sin(t * 7), w2 = Math.sin(t * 5 + 1);
+      const restR = [[230, 80], [330, 230], [210, 300]], restL = [[-230, 80], [-330, 230], [-210, 300]];
       switch (name) {
-        case 'type': return { R: [[150, 290], [215, 400], [95 + w * 14, 420 + Math.abs(w) * 10]], L: [[-150, 290], [-215, 400], [-95 - w2 * 14, 420 + Math.abs(w2) * 10]] };
-        case 'gesture': return { R: [[150, 290], [215, 430], [150 + w * 22, 330 + w2 * 20]], L: [[-150, 290], [-215, 400], [-100, 425]] };
-        case 'point': return { R: [[150, 290], [215, 420], [175 + w * 8, 300 + w * 10]], L: [[-150, 290], [-215, 400], [-100, 425]], fing: 'point' };
-        case 'three': return { R: [[150, 290], [215, 420], [175, 290 + w * 6]], L: [[-150, 290], [-215, 400], [-100, 425]], fing: 'three' };
-        case 'open': return { R: [[150, 290], [230, 420], [250 + w * 10, 360]], L: [[-150, 290], [-230, 420], [-250 - w * 10, 360]] };
-        case 'shrug': return { R: [[150, 290], [250, 380], [275, 300 + w * 6]], L: [[-150, 290], [-250, 380], [-275, 300 + w * 6]] };
-        case 'facepalm': return { R: [[150, 290], [175, 330], [40, 40]], L: [[-150, 290], [-215, 400], [-100, 425]] };
-        case 'chin': return { R: [[150, 290], [150, 420], [50, 205]], L: [[-150, 290], [-215, 400], [-100, 425]] };
-        case 'crossed': return { R: [[150, 290], [170, 400], [-110, 395]], L: [[-150, 290], [-170, 410], [110, 410]] };
-        case 'proud': return { R: [[150, 290], [175, 400], [60, 330]], L: [[-150, 290], [-215, 400], [-100, 425]] };
-        default: return { R: [[150, 290], [215, 400], [100, 425]], L: [[-150, 290], [-215, 400], [-100, 425]] };
+        case 'type': return { R: [[230, 80], [320, 240], [170 + w * 16, 300 + Math.abs(w) * 8]], L: [[-230, 80], [-320, 240], [-170 - w2 * 16, 300 + Math.abs(w2) * 8]] };
+        case 'gesture': return { R: [[230, 80], [360, 160], [330 + w * 24, -20 + w2 * 22]], L: restL };
+        case 'point': return { R: [[230, 80], [360, 120], [340 + w * 8, -90 + w * 10]], L: restL, fing: 'point' };
+        case 'three': return { R: [[230, 80], [360, 120], [340, -90 + w * 6]], L: restL, fing: 'three' };
+        case 'open': return { R: [[230, 80], [370, 180], [390 + w * 10, 40]], L: [[-230, 80], [-370, 180], [-390 - w * 10, 40]] };
+        case 'shrug': return { R: [[230, 80], [380, 100], [400, -60 + w * 6]], L: [[-230, 80], [-380, 100], [-400, -60 + w * 6]] };
+        case 'facepalm': return { R: [[230, 80], [330, 260], [70, -70]], L: restL };
+        case 'chin': return { R: [[230, 80], [310, 300], [70, 150]], L: restL };
+        case 'crossed': return { R: [[230, 80], [300, 260], [-120, 210]], L: [[-230, 80], [-300, 270], [120, 220]] };
+        case 'proud': return { R: [[230, 80], [330, 260], [90, 190]], L: restL };
+        default: return { R: restR, L: restL };
       }
     }
     WB.effect((t) => {
-      let em = val(o.eyes, t, 'base');
+      const em = val(o.eyes, t, 'base');
       for (const k in eyes) show(eyes[k], k === em);
       show(blink, em === 'base' && ((t * 1.0 + who.length * 0.37) % 3.2) < 0.13);
-      const lk = val(o.look, t, 0);
-      pupils.setAttribute('transform', `translate(${lk} 0)`);
-      const br = val(o.brow, t, 0);
-      bL.setAttribute('transform', `translate(0 ${-br}) ${val(o.worried, t, false) ? 'rotate(-12 -48 -28)' : ''}`);
-      bR.setAttribute('transform', `translate(0 ${-br}) ${val(o.worried, t, false) ? 'rotate(12 48 -28)' : ''}`);
+      pupils.setAttribute('transform', `translate(${val(o.look, t, 0)} 0)`);
+      const br = val(o.brow, t, 0), wr = val(o.worried, t, false);
+      bL.setAttribute('transform', `translate(0 ${-br}) ${wr ? 'rotate(-12 -48 -30)' : ''}`);
+      bR.setAttribute('transform', `translate(0 ${-br}) ${wr ? 'rotate(12 48 -30)' : ''}`);
       const ps = pose(val(o.pose, t, 'table'), t);
       for (const [side, A] of [['R', R], ['L', Lf]]) {
         const [s, e, h] = ps[side];
-        setLimb(A.up, `M ${s[0]} ${s[1]} L ${e[0]} ${e[1]}`);
-        setLimb(A.low, `M ${e[0]} ${e[1]} L ${h[0]} ${h[1]}`);
+        const d = `M ${s[0]} ${s[1]} Q ${e[0]} ${e[1]} ${h[0]} ${h[1]}`;
+        A.hb.setAttribute('d', d); A.hc.setAttribute('d', d);
         A.hand.setAttribute('transform', `translate(${h[0]} ${h[1]})`);
       }
       show(point, ps.fing === 'point'); show(three, ps.fing === 'three');
-      // cabeça balança conforme a fala
+      // a mão do facepalm/queixo/peito fica na frente do corpo
+      const front = ['facepalm', 'chin', 'crossed', 'proud'].includes(val(o.pose, t, 'table'));
+      if (front && arms.previousSibling !== body) root.appendChild(arms);
+      if (!front && arms.nextSibling !== body) root.insertBefore(arms, body);
       const talk = val(o.fala, t, false) ? env(t) : 0;
       const tilt = val(o.tilt, t, 0) + Math.sin(t * 2.3) * 1.5 + Math.sin(t * 9) * 2.5 * talk;
-      head.setAttribute('transform', `translate(0 ${(-Math.abs(Math.sin(t * 8)) * 6 * talk).toFixed(1)}) rotate(${tilt.toFixed(2)} 0 200)`);
+      const sq = 1 + Math.sin(t * 16) * 0.025 * talk;
+      body.setAttribute('transform', `translate(0 ${(-Math.abs(Math.sin(t * 8)) * 8 * talk).toFixed(1)}) rotate(${tilt.toFixed(2)} 0 260) scale(${(2 - sq).toFixed(3)} ${sq.toFixed(3)})`);
     });
-    return { root, head };
+    return { root, head: body };
   }
 
   // ---------------------------------------------------------------- acessórios / ícones
@@ -351,7 +365,7 @@ window.CENAS = function (WB) {
     const pg = WB.group(cam);
     // relativo ao início do plano, para que val() funcione com tempos absolutos
     personagem(pg, who, o);
-    tf(pg, 540, 960, 1.32);
+    tf(pg, 540, 1235, 1.22);
     // mesa e notebook
     const mesa = WB.group(cam);
     shape('M -60 1545 L 1140 1545 L 1140 2000 L -60 2000 Z', '#b98d5f', mesa, 7);
@@ -364,7 +378,7 @@ window.CENAS = function (WB) {
       if (t < t0 || t >= t1) return;
       const z = val(o.zoom, t, 1), drift = 1 + 0.03 * ramp(t, t0, t1);
       const s = z * drift, sk = shake(t, val(o.shake, t, 0));
-      cam.setAttribute('transform', `translate(${(540 + sk.x).toFixed(1)} ${(1000 + sk.y).toFixed(1)}) scale(${s.toFixed(3)}) translate(-540 -1000)`);
+      cam.setAttribute('transform', `translate(${(540 + sk.x).toFixed(1)} ${(1200 + sk.y).toFixed(1)}) scale(${s.toFixed(3)}) translate(-540 -1200)`);
     });
     // etiqueta de nome na 1ª aparição
     if (o.nameTag && !firstSeen[who]) {
