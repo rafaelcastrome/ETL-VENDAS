@@ -12,6 +12,8 @@ Como funciona:
 - **O que a skill já traz:** o motor de animação (`assets/engine.js`) cuida do papel, da mão, do texto manuscrito, da troca de folha, dos ícones das redes e da renderização determinística.
 - **Mão ✍🏻:** arte do Twemoji (CC-BY 4.0), com lápis amarelo cuja ponta assume a cor da tinta. Crédito em `assets/LICENSE-twemoji.txt`; se quiser, cite "Mão: Twemoji (CC-BY 4.0)" na descrição do perfil ou do vídeo.
 
+- **Sem mão (cenas prontas):** quando o pedido for "não quero que desenhe", "cenas prontas" ou um meme/esquete animado, use `"semMao": true` no `projeto.json`. A mão some e os personagens aparecem prontos, com cortes secos (`WB.shot`), entrada com pulo (`WB.pop`), zoom, tremor e bocas mexendo no ritmo do áudio. Veja `references/api.md` §10 e o exemplo `videos/meme_docinho/` (esquete pai × filha).
+
 `<skill>` abaixo é a pasta deste SKILL.md.
 
 ## Fluxo

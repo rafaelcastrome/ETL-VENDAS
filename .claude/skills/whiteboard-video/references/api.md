@@ -12,6 +12,7 @@
 7. Folhas (`newPage`)
 8. Redes sociais (`ctaRedes`, marca d'água)
 9. Armadilhas comuns
+10. Modo sem mão (cenas prontas)
 
 ---
 
@@ -135,3 +136,16 @@ Efeitos precisam ser **funções puras de t**, sem estado entre quadros, porque 
 - **Mão cobrindo o desenho**: entre um desenho e outro, se o intervalo for menor que 1,5 s, a mão fica parada perto do último traço. Se a fala continua depois que o desenho da cena terminou, ou no fim de uma cena antes de uma pausa, chame `WB.restHand(cena, f, f2)` para a mão sair da frente (ela volta sozinha para o próximo desenho).
 - **`render.js --out`** é relativo ao diretório atual (sem `--out`, sai `video.mp4` dentro da pasta do projeto).
 - **Erros no `cenas.js`** aparecem como `Erro na página` ao rodar o `render.js`, com a mensagem do navegador.
+
+## 10. Modo sem mão (cenas prontas)
+
+Com `"semMao": true` no `projeto.json`, a mão fica escondida e tudo o que for agendado com `draw`/`write` aparece **inteiro** no instante `t0` (sem revelação). O estilo continua o do Caderno Amarelo: papel quadriculado, traço de caneta e fonte Caveat. A graça vem do movimento, não do desenho:
+
+- `WB.ink(d, cor, largura, parent, attrs)` → `<path>` pronto (contorno, sem preenchimento).
+- `WB.text(str, x, y, size, cor, parent, anchor = 'middle')` → texto manuscrito já preenchido.
+- `WB.shot(t0, t1, parent)` → grupo visível só em `[t0, t1)` (corte seco de "plano"). Monte cada plano dentro do seu `shot`.
+- `WB.pop(g, t0, cx, cy, dur = 0.28, { rot })` → entrada com pulo (escala com overshoot) em torno de `(cx, cy)`.
+- Para personagens, use `WB.mk('path', { d, fill, stroke })` com preenchimento (pele, roupa) e contorno preto de 6–7 px; troque expressões mostrando e escondendo subgrupos (`style.display`) dentro de `WB.effect(t => ...)`.
+- **Meme/esquete com áudio de terceiros:** use o áudio só para sincronizar (`narration.mp3` + `envelope.js` com o volume a 30 valores/s para mexer as bocas) e `timeline.json` manual com uma cena só. Entregue a versão SEM áudio para postar com o som original da plataforma e credite o criador.
+- Linguagem de comédia que funciona: zoom em degraus na cara (1,7 → 2,4 → 3,1), tremor proporcional ao volume, fundo de raios vermelhos girando nos momentos de raiva/susto, onomatopeias em explosões ("POW!", "PÁ!"), nuvem de briga com braços e pernas aparecendo, olhos de pirulito/fogo/X, veia pulsando, vapor saindo da cabeça. Legendas grandes (≥ 96 px) com contorno claro (cópia do texto com `stroke-width` ≈ 0,17·size por trás).
+
